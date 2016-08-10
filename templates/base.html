@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link href="{{ url_for('static', filename = 'css/bootstrap.css') }}" rel="stylesheet">
+<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+{% block title %}
+<title>DO WHAT THOU WILT</title>
+{% endblock %}
+<head>
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+
+<div class="main">
+
+<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Colin's Blog</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">首页</a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="/memo">留言板</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if session.get('log') %}
+                    <li><a href="/logout">登出</a></li>
+                {% else %}
+                    <li><a href="/login">登录</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container">
+{% block new_content %}
+<div class="row">
+<br>
+    <div class="col-md-9">
+        {% block page_content %}{% endblock %}
+    </div>
+    <div class="col-md-3">
+    <br>
+    <div class="well" style="padding-left: 18px;padding-right: 13px">
+        <h3 class="text-center">
+            关于这里
+        </h3>
+        <br>
+        <img alt="照片无法显示" src='http://i1.piimg.com/567571/2a97d222ad93fa29.jpg' class="img-responsive center-block img-circle" />
+        <br>
+        <p>
+        &nbsp &nbsp &nbsp &nbsp 学习py交易的副产品，某人的试验田。不定时抽风更一些奇怪的东西，加入一些奇怪的功能。
+        </p>
+    </div>
+    </div>
+</div>
+{% endblock %}
+</div>
+<br>
+
+<div class="push"></div>
+
+</div>
+
+<div style='height:120px; clear:both; background:#696969;width:100%;color:#F5F5F5; font-style: italic'>
+<br>
+<h5 style="margin-left: 50px;">Powered by 烂柯</h5>
+<h5 style="margin-left: 50px;">Designed by 烂柯</h5>
+<h5 style="margin-left: 50px;">本站源码受Apache Licence 2.0开源协议保护；本站所有原创内容遵循<a style="color:#F5F5F5;" href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/legalcode">知识共享署名3.0</a>，欢迎转载</h5>
+</div>

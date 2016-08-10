@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<br>
+{% if session.get('log') %}
+
+<a class="btn btn-default" href="/new">发布新博客</a>
+<br>
+<br>
+{% endif %}
+
+
+
+{%- for t in tem %}
+<div class="well" style='word-wrap:break-word;'>
+    <h2><a href="/article/{{ t[0] }}" style="color:#000000">{{ t[1] }}</a></h2>
+    <br>
+    <p>
+        {{ t[3]|safe }}
+    </p>
+    <p><p style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">Post on : {{ t[2] }}</p></p>
+</div>
+{%- endfor %}
+
+
+<nav>
+    <ul class="pagination">
+
+{% if not pg == 1 %}
+    <li class="active"><a href="/page/1">1</a></li>
+{% endif %}
+
+
+{%- for cu in range(nu) %}
+{% if pg == cu+1 %}
+    <li class="active"><a href="/page/{{ cu+1 }}">{{ cu+1 }}</a></li>
+{% else %}
+    <li><a href="/page/{{ cu+1 }}">{{ cu+1 }}</a></li>
+{% endif %}
+{%- endfor %}
+
+
+{% if not pg==nu %}
+    <li><a href="/page/{{ pg+1 }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+{% endif %}
+
+    </ul>
+</nav>
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

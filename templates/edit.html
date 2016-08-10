@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block new_content %}
+<link href="//cdn.bootcss.com/summernote/0.8.1/summernote.css" rel="stylesheet">
+<script src="//cdn.bootcss.com/summernote/0.8.1/summernote.min.js"></script>
+<br>
+
+<div class="col-md-10 col-md-offset-1">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        <form method="POST">
+        <div class="form-group">
+            <label for="blog_title">标题</label>
+            <input type="text" id="blog_title" class="form-control" name="titl" value={{ title }}>
+            <br>
+            <label for="summernote">正文</label>
+            <textarea class="input-block-level" name="editor" id="summernote">{{ saave }}</textarea>
+            <br>
+            <button type="submit" class="btn btn-primary">发布博客</button>
+        </div>
+        </form>
+        <script>$(document).ready(function() {$('#summernote').summernote({height: 300,});})</script>
+</div>
+{% endblock %}
