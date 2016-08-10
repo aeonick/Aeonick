@@ -10,14 +10,14 @@ sys.setdefaultencoding( "utf-8" )
 app = Flask(__name__)
 
 DATABASE = os.path.join(app.root_path, 'db.db')
-SECRET_KEY = 'foolish'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 app.config.from_object(__name__)
 
 
 
 def get_db():
     if not hasattr(g, 'sqlite_db'):
-        g.sqlite_db = connect_db()
+        g.sqlite_db = sqlite3.connect(app.config['DATABASE'])
     return g.sqlite_db
 
 @app.teardown_appcontext
@@ -25,19 +25,14 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
-def connect_db():
-    rv = sqlite3.connect(app.config['DATABASE'])
-    return rv
-
-
-
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('error.html'), 404
+
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('error.html'), 500
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -46,10 +41,12 @@ def login():
             session['log'] = True
             return redirect(url_for('index'))
     return render_template('login.html')
+
 @app.route('/logout')
 def logout():
     session['log'] = False
     return redirect(url_for('index'))
+
 @app.route('/new', methods=['GET', 'POST'])
 def new():
     if session.get('log'):
@@ -64,6 +61,7 @@ def new():
                 return render_template('edit.html',saave=request.form['editor'])
         return render_template('edit.html')
     return redirect(url_for('index'))
+
 @app.route('/edit/<int:bg>', methods=['GET', 'POST'])
 def edit(bg):
     if session.get('log'):
@@ -82,6 +80,7 @@ def edit(bg):
                 return render_template('edit.html',saave=request.form['editor'])
         return render_template('edit.html',saave=cont[1],title=cont[0])
     return redirect(url_for('index'))
+
 @app.route('/dele/<int:bg>')
 def dele(bg):
     if session.get('log'):
@@ -92,15 +91,13 @@ def dele(bg):
             return redirect(url_for('index'))
     return redirect(url_for('index'))
 
-
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect(url_for('page',pg=1))
 
 @app.route('/article/None')
 def backnone():
     return redirect(url_for('page',pg=1))
-
 
 @app.route('/page/<int:pg>')
 def page(pg):
@@ -127,8 +124,6 @@ def memo():
     else:
         return render_template('memo.html',id=0,tem=tem)
 
-
-
 @app.route('/article/<int:bg_id>', methods=['GET', 'POST'])
 def article(bg_id):
     if request.method == 'POST':
@@ -145,7 +140,6 @@ def article(bg_id):
         tem=get_db().execute(' SELECT content, date, author, id FROM comm WHERE blog=?',(bg_id,)).fetchall() or [('快来发布第一条评论吧','',''),]
         return render_template('article.html',t=cont[0],d=cont[1],c=cont[2],id=bg_id,tem=tem,back=request.referrer)
 
-
 @app.route('/del/<int:bg>/<int:ccid>')
 def delet(bg,ccid):
     if session.get('log'):
@@ -158,8 +152,6 @@ def delet(bg,ccid):
             else:
                 return redirect(url_for('memo'))
     return redirect(url_for('article',bg_id=bg))
-
-
 
 
 if __name__ == '__main__':
