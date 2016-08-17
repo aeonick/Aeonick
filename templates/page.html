@@ -2,54 +2,36 @@
 
 {% block page_content %}
 <br>
-{% if session.get('log') %}
-
-<a class="btn btn-default" href="/new">发布新博客</a>
 <br>
 <br>
-{% endif %}
-
-
-
-{%- for t in tem %}
+{%- for t in temp %}
 <div class="well" style='word-wrap:break-word;'>
-    <h2><a href="/article/{{ t[0] }}" style="color:#000000">{{ t[1] }}</a></h2>
-    <br>
+    <h3><a href="/article/{{ t[0] }}" style="color:#000000">&nbsp{{ t[1] }}</a></h3>
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3); width='80%'" >
     <p>
         {{ t[3]|safe }}
     </p>
-    <p><p style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">Post on : {{ t[2] }}</p></p>
+    <p style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">Post on : {{ t[2] }}</p>
 </div>
 {%- endfor %}
 
-
 <nav>
     <ul class="pagination">
-
-{% if not pg == 1 %}
+    {% if not pg == 1 %}
     <li class="active"><a href="/page/1">1</a></li>
-{% endif %}
-
-
-{%- for cu in range(nu) %}
-{% if pg == cu+1 %}
-    <li class="active"><a href="/page/{{ cu+1 }}">{{ cu+1 }}</a></li>
-{% else %}
-    <li><a href="/page/{{ cu+1 }}">{{ cu+1 }}</a></li>
-{% endif %}
-{%- endfor %}
-
-
-{% if not pg==nu %}
+    {% endif %}
+    {%- for current_pg in range(max_pg) %}
+    {% if pg == current_pg+1 %}
+    <li class="active"><a href="/page/{{ current_pg+1 }}">{{ current_pg+1 }}</a></li>
+    {% else %}
+    <li><a href="/page/{{ current_pg+1 }}">{{ current_pg+1 }}</a></li>
+    {% endif %}
+    {%- endfor %}
+    {% if not pg == max_pg %}
     <li><a href="/page/{{ pg+1 }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-{% endif %}
-
+    {% endif %}
     </ul>
 </nav>
-
-
-
-
 
 
 {% endblock %}

@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: 
+Disallow: /login/
+Disallow: /logout/
+Disallow: /new/
+Disallow: /edit/
+Disallow: /dele/
+Disallow: /del/

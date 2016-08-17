@@ -1,14 +1,19 @@
 {% extends "base.html" %}
 
-{% block page_content %}
+{% block new_content %}
+<div class="col-md-7 col-md-offset-1">
+
+
 <div style="margin-left: 60px;">
+<br><br>
 <h3>输入口令，发布新博客！</h3>
 <br>
 <br>
 <div class="row">
 <div class="col-md-4">
 <form method="POST">
-    <input type="password" class="form-control" name="namea" />
+    <input type="password" class="form-control" name="password" />
+    <br>
     <br>
     <button type="submit" class="btn btn-primary">确认</button>
 </form> 
@@ -18,5 +23,6 @@
 <br>
 <h4><small>这里是破斧子更新博客的入口。如果您是访客，欢迎您在博文下评论</small></h4>
 <h4><small><a href="/">点击这里</a>回到首页</small></h4>
+</div>
 </div>
 {% endblock %}

@@ -4,6 +4,7 @@
 
 
 <div class="row">
+<br><br>
 <div class="col-md-10 col-md-offset-1">
 <form method="POST">
     <div class="form-group">
@@ -21,18 +22,18 @@
 </div>
 
 
-{%- for ass in range(4) %}
+{%- for column in range(4) %}
 
 <div class="col-md-3" style='word-wrap:break-word;'>
 
-{%- for ct in tem[ass::4] %}
+{%- for curr in temp[column::4] %}
 <div class="alert alert-info" role="alert">
-<p>{{ ct[0] }}</p>
-{% if session.get('log') and ct[1] != "" %}
-<a class=" btn btn-info btn-xs " href="/del/{{ id }}/{{ ct[3] }}" role="button">删除</a>
+<p>{{ curr[0] }}</p>
+{% if session.get('log') and curr[1] != "" %}
+<a class=" btn btn-info btn-xs " href="/delc/0/{{ curr[3] }}" role="button">删除</a>
 {% endif %}
 <div style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">
-<p>{{ ct[2] }} &nbsp &nbsp {{ ct[1] }}</p>
+<p>{{ curr[2] }} &nbsp &nbsp {{ curr[1] }}</p>
 </div>
 </div>
 {%- endfor %}

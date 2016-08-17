@@ -8,8 +8,9 @@
 
 
 <div class="well" style='word-wrap:break-word;'>
+<br>
     <h2>
-        {{ t }}
+        &nbsp&nbsp{{ t }}
     {% if session.get('log') %}
 
 <a style="float:right" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" role="button">删除</a>
@@ -25,7 +26,7 @@
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">不了</button>
-        <a class="btn btn-primary" href="/dele/{{ id }}" role="button">删!</a>
+        <a class="btn btn-primary" href="/delb/{{ id }}" role="button">删!</a>
         </div>
     </div>
 </div>
@@ -33,11 +34,12 @@
     <a style="float:right" class="btn btn-default btn-sm" href="/edit/{{ id }}" role="button">编辑</a>
     {% endif %}
     </h2>
-    <p><p style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">Post on : {{ d }}</p></p>
+    <p style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">Post on : {{ d }}</p>
     <br>
-    <p>
-        {{ c|safe }}
-    </p>
+    <div style="line-height:1.8">
+    {{ c|safe }}
+    </div>
+    <br>
 </div>
 
 
@@ -46,12 +48,12 @@
 
 
 <div class="well" style='word-wrap:break-word;'>
-
+<br>
 {%- for ct in tem %}
 <div class="thumbnail">
 <span>{{ ct[0] }}</span>
 {% if session.get('log') and ct[1] != "" %}
-<a class=" btn btn-info btn-xs " href="/del/{{ id }}/{{ ct[3] }}" role="button">删除</a>
+<a class=" btn btn-info btn-xs " href="/delc/{{ id }}/{{ ct[3] }}" role="button">删除</a>
 {% endif %}
 <div style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">
 <p>{{ ct[2] }} &nbsp &nbsp {{ ct[1] }}</p>

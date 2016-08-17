@@ -4,7 +4,7 @@
 <link href="//cdn.bootcss.com/summernote/0.8.1/summernote.css" rel="stylesheet">
 <script src="//cdn.bootcss.com/summernote/0.8.1/summernote.min.js"></script>
 <br>
-
+<br>
 <div class="col-md-10 col-md-offset-1">
         {% for message in get_flashed_messages() %}
         <div class="alert alert-warning">
@@ -14,11 +14,23 @@
         {% endfor %}
         <form method="POST">
         <div class="form-group">
-            <label for="blog_title">标题</label>
-            <input type="text" id="blog_title" class="form-control" name="titl" value={{ title }}>
+            <div class="form-inline">
+            <label>分类</label>
+            <select class="form-control" name="file">
+            <option value =1>分类1</option>
+            <option value =3>分类2</option>
+            <option value =4>分类3</option>
+            <option value =5>分类4</option>
+            </select>
+            <label>&nbsp&nbsp&nbsp&nbsp&nbsp标签</label>
+            <input type="text" class="form-control" name="tags" style="width: 50%" value={{ tags }}>
+            </div>
+            <br>
+            <label>标题</label>
+            <input type="text" class="form-control" name="title" value={{ title }}>
             <br>
             <label for="summernote">正文</label>
-            <textarea class="input-block-level" name="editor" id="summernote">{{ saave }}</textarea>
+            <textarea class="input-block-level" name="editor" id="summernote">{{ content }}</textarea>
             <br>
             <button type="submit" class="btn btn-primary">发布博客</button>
         </div>

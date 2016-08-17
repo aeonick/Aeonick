@@ -15,7 +15,7 @@ def check(pasword):
 
 def abstr(text):
     sta=0
-    while sta<len(text) and sta < 380:
+    while sta<len(text) and sta < 180:
         if text[sta] == '<':
             end = sta
             while not text[end] == '>':
@@ -29,5 +29,5 @@ def abstr(text):
                 text=text[0:sta]+text[end+1:]
             sta -= 1
         sta += 1
-    text = text[:360]+'...'
+    text = text[:160]+'...'
     return text
