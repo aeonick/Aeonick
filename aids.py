@@ -8,7 +8,7 @@ def check(pasword):
     else:
         pasword += '1396'
     m.update(pasword)
-    if m.hexdigest()=='9bd414e8c3cdd92cc9df53cc5a2f98dc':
+    if m.hexdigest()=='24f1dfebc07150ade8e1dee20b02b942':
         return True
     else:
         return False
