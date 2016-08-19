@@ -14,3 +14,5 @@ A lightweight blog frame based on flask+sqlite3+bootstrap
 4.浏览器中打开127.0.0.1:500
 
 5.enjoy~
+
+初始管理密码为000000，可在aids.py中修改盐和密码
