@@ -12,7 +12,7 @@
         <br>
         <div class="form-inline">
             <button type="submit" style="float:right" class="btn btn-default">发布留言!</button>
-            <input type="text" style="float:right" class="form-control" name="author" placeholder="输入您的昵称或直接留空">
+            <input type="text" style="float:right " class="form-control" name="author" placeholder="输入您的昵称或直接留空">
         </div>
     </div>
 </form>
@@ -22,18 +22,19 @@
 </div>
 
 
-{%- for column in range(4) %}
+{%- for ass in range(4) %}
 
 <div class="col-md-3" style='word-wrap:break-word;'>
 
-{%- for curr in temp[column::4] %}
+{%- for ct in tem[ass::4] %}
 <div class="alert alert-info" role="alert">
-<p>{{ curr[0] }}</p>
-{% if session.get('log') and curr[1] != "" %}
-<a class=" btn btn-info btn-xs " href="/delc/0/{{ curr[3] }}" role="button">删除</a>
+<p>{{ ct[0]|replace("\n", "<br>")|safe }}</p>
+{% if session.get('log') and ct[1] != "" %}
+<a class=" btn btn-info btn-xs " href="/del/0/{{ ct[3] }}" role="button">删除</a>
 {% endif %}
 <div style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">
-<p>{{ curr[2] }} &nbsp &nbsp {{ curr[1] }}</p>
+<br>
+<p style="font-size: 15px">{{ ct[2] }} &nbsp &nbsp {{ ct[1] }}</p>
 </div>
 </div>
 {%- endfor %}

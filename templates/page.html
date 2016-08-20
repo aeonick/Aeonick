@@ -1,37 +1,50 @@
 {% extends "base.html" %}
 
 {% block page_content %}
-<br>
-<br>
-<br>
-{%- for t in temp %}
+<br><br><br>
+
+
+
+
+{%- for t in tem %}
 <div class="well" style='word-wrap:break-word;'>
     <h3><a href="/article/{{ t[0] }}" style="color:#000000">&nbsp{{ t[1] }}</a></h3>
     <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3); width='80%'" >
     <p>
         {{ t[3]|safe }}
     </p>
-    <p style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">Post on : {{ t[2] }}</p>
+    <p><p style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">Post on : {{ t[2] }}</p></p>
 </div>
 {%- endfor %}
 
+
 <nav>
     <ul class="pagination">
-    {% if not pg == 1 %}
+
+{% if not pg == 1 %}
     <li class="active"><a href="/page/1">1</a></li>
-    {% endif %}
-    {%- for current_pg in range(max_pg) %}
-    {% if pg == current_pg+1 %}
-    <li class="active"><a href="/page/{{ current_pg+1 }}">{{ current_pg+1 }}</a></li>
-    {% else %}
-    <li><a href="/page/{{ current_pg+1 }}">{{ current_pg+1 }}</a></li>
-    {% endif %}
-    {%- endfor %}
-    {% if not pg == max_pg %}
+{% endif %}
+
+
+{%- for cu in range(pmax) %}
+{% if pg == cu+1 %}
+    <li class="active"><a href="/page/{{ cu+1 }}">{{ cu+1 }}</a></li>
+{% else %}
+    <li><a href="/page/{{ cu+1 }}">{{ cu+1 }}</a></li>
+{% endif %}
+{%- endfor %}
+
+
+{% if not pg==pmax %}
     <li><a href="/page/{{ pg+1 }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-    {% endif %}
+{% endif %}
+
     </ul>
 </nav>
+
+
+
+
 
 
 {% endblock %}

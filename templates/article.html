@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}
+<title>{{ t }}</title>
+{% endblock %}
+
 {% block page_content %}
 
 <div class="pager">
@@ -10,7 +14,7 @@
 <div class="well" style='word-wrap:break-word;'>
 <br>
     <h2>
-        &nbsp&nbsp{{ t }}
+        {{ t }}
     {% if session.get('log') %}
 
 <a style="float:right" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" role="button">删除</a>
@@ -26,7 +30,7 @@
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">不了</button>
-        <a class="btn btn-primary" href="/delb/{{ id }}" role="button">删!</a>
+        <a class="btn btn-primary" href="/dele/{{ id }}" role="button">删!</a>
         </div>
     </div>
 </div>
@@ -40,6 +44,7 @@
     {{ c|safe }}
     </div>
     <br>
+    <br>
 </div>
 
 
@@ -51,9 +56,9 @@
 <br>
 {%- for ct in tem %}
 <div class="thumbnail">
-<span>{{ ct[0] }}</span>
+<span>{{ ct[0]|replace("\n", "<br>")|safe }}</span>
 {% if session.get('log') and ct[1] != "" %}
-<a class=" btn btn-info btn-xs " href="/delc/{{ id }}/{{ ct[3] }}" role="button">删除</a>
+<a class=" btn btn-info btn-xs " href="/del/{{ id }}/{{ ct[3] }}" role="button">删除</a>
 {% endif %}
 <div style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">
 <p>{{ ct[2] }} &nbsp &nbsp {{ ct[1] }}</p>
