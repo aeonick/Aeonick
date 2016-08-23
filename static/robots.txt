@@ -7,3 +7,4 @@ Disallow: /dele/
 Disallow: /del/
 Disallow: /arch
 Disallow: /memo/
+Disallow: /admin/

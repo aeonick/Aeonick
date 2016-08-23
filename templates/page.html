@@ -8,7 +8,7 @@
 
 {%- for t in tem %}
 <div class="well" style='word-wrap:break-word;'>
-    <h3><a href="/article/{{ t[0] }}" style="color:#000000">{{ t[1] }}</a></h3>
+    <h3 style="margin-left: 10px"><a href="/article/{{ t[0] }}" style="color:#000000">{{ t[1] }}</a></h3>
     <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3); width='80%'" >
     <p>
         {{ t[3]|safe }}
@@ -20,12 +20,9 @@
 
 <nav>
     <ul class="pagination">
-
 {% if not pg == 1 %}
-    <li class="active"><a href="/page/1">1</a></li>
+    <li><a href="/page/{{ pg-1 }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 {% endif %}
-
-
 {%- for cu in range(pmax) %}
 {% if pg == cu+1 %}
     <li class="active"><a href="/page/{{ cu+1 }}">{{ cu+1 }}</a></li>
@@ -33,12 +30,9 @@
     <li><a href="/page/{{ cu+1 }}">{{ cu+1 }}</a></li>
 {% endif %}
 {%- endfor %}
-
-
 {% if not pg==pmax %}
     <li><a href="/page/{{ pg+1 }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 {% endif %}
-
     </ul>
 </nav>
 

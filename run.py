@@ -118,7 +118,7 @@ def memo():
     if request.method == 'POST':
         if request.form['comment'] and session.get('angelina')!=50:
                 session['angelina']=(session.get('angelina') or 0)+1
-                author = request.form['author'] or u'匿名'
+                author = request.form['author'] or u'访客'
                 cur=get_db().cursor()
                 cur.execute('insert into comm (content, author, blog) values (?, ?, ?)', (request.form['comment'], author, 0))
                 get_db().commit()
@@ -138,21 +138,23 @@ def article(bg_id):
     if request.method == 'POST':
         if request.form['comment'] and session.get('angelina')!=50:
                 session['angelina']=(session.get('angelina') or 0)+1
-                author = request.form['author'] or u'匿名'
+                author = request.form['author'] or u'访客'
                 cur=get_db().cursor()
                 cur.execute('insert into comm (content, author, blog) values (?, ?, ?)', (request.form['comment'], author, bg_id))
                 get_db().commit()
                 return redirect(url_for('article',bg_id=bg_id))
     try:
         cur=get_db().cursor()
-        cur.execute('SELECT title, date, content from blog where id=?',(bg_id,))
+        cur.execute('SELECT title, date, content, tag from blog where id=?',(bg_id,))
         cont=cur.fetchall()[0]
+        tags=cont[3] or 'None'
+        tags=tags.split(',')
     except:
         return render_template('error.html'), 404
     else:
         cur.execute(' SELECT content, date, author, id FROM comm WHERE blog=?',(bg_id,))
         tem=cur.fetchall() or [('快来发布第一条评论吧','',''),]
-        return render_template('article.html',t=cont[0],d=cont[1],c=cont[2],id=bg_id,tem=tem,back=request.referrer)
+        return render_template('article.html',t=cont[0],d=cont[1],c=cont[2],id=bg_id,tem=tem,back=request.referrer,tags=tags)
 
 @app.route('/del/<int:bg_id>/<int:ccid>')
 def delet(bg_id,ccid):
@@ -181,6 +183,15 @@ def arch(arc,pg):
     else:
         return render_template('page.html',tem=tem,pmax=pmax,pg=pg)
 
+@app.route('/admin')
+def admin():
+    if session.get('log'):
+        cur=get_db().cursor()
+        cur.execute(' SELECT content, author, date FROM comm ORDER BY id DESC')
+        tem=cur.fetchall()
+        return render_template('admin.html',tem=tem)
+    else:
+        return redirect(url_for('page',pg=1))
 
 @app.route('/robots.txt')
 def robots():
