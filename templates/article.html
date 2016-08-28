@@ -13,7 +13,7 @@
 
 <div class="well" style='word-wrap:break-word;'>
 <br>
-    <h2 style="margin-left: 25px">
+    <h2 style="margin-left: 10px">
         {{ t }}
     {% if session.get('log') %}
 
@@ -44,9 +44,9 @@
     {{ c|safe }}
     </div>
     <br>
-    <span style='margin-left: 25px;color:rgb(170, 170, 170); font-style: italic''>标签：</span>
+    <span style='margin-left: 25px;color:rgb(170, 170, 170)' class="glyphicon glyphicon-tag"></span>
     {%- for tag in tags %}
-    <span style='margin-left: 5px;color:rgb(170, 170, 170); font-style: italic'>{{ tag }}</span>
+    <a href="/arch/{{ tag }}/1"><span style='margin-left: 5px;color:rgb(170, 170, 170); font-style: italic'>{{ tag }}</span></a>
     {%- endfor %}
     <br>
     <br>
