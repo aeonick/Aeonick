@@ -7,13 +7,18 @@
 
 
 {%- for t in tem %}
-<div class="well" style='word-wrap:break-word;'>
-    <h3 style="margin-left: 10px"><a href="/article/{{ t[0] }}" style="color:#000000">{{ t[1] }}</a></h3>
+<div class="well" style='word-wrap:break-word'>
+    <h3><a href="/article/{{ t[0] }}" style="color:#000000">{{ t[1] }}</a></h3>
     <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3); width='80%'" >
     <p>
-        {{ t[3]|safe }}
+        {{ t[2]|safe }}
     </p>
-    <p><p style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">Post on : {{ t[2] }}</p></p>
+    <div class="text-right" style="color: rgb(170, 170, 170); font-style: italic;">
+    <span class="glyphicon glyphicon-tag"></span>
+    {%- for tag in (t[3] or '').split(',') %}
+    <a href="/arch/{{ tag }}/1"><span style='margin-left: 5px;color:rgb(170, 170, 170)'>{{ tag }}</span></a>
+    {%- endfor %}
+    </div>
 </div>
 {%- endfor %}
 
@@ -21,17 +26,17 @@
 <nav>
     <ul class="pagination">
 {% if not pg == 1 %}
-    <li><a href="/page/{{ pg-1 }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    <li><a href="{{ pg-1 }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 {% endif %}
 {%- for cu in range(pmax) %}
 {% if pg == cu+1 %}
-    <li class="active"><a href="/page/{{ cu+1 }}">{{ cu+1 }}</a></li>
+    <li class="active"><a href="{{ cu+1 }}">{{ cu+1 }}</a></li>
 {% else %}
-    <li><a href="/page/{{ cu+1 }}">{{ cu+1 }}</a></li>
+    <li><a href="{{ cu+1 }}">{{ cu+1 }}</a></li>
 {% endif %}
 {%- endfor %}
 {% if not pg==pmax %}
-    <li><a href="/page/{{ pg+1 }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+    <li><a href="{{ pg+1 }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 {% endif %}
     </ul>
 </nav>
