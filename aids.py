@@ -1,4 +1,11 @@
 # -*- coding:utf-8 -*-
+import sys
+reload(sys)
+sys.setdefaultencoding( "utf-8" )
+
+
+
+
 
 def check(pasword):
     import hashlib
@@ -13,8 +20,9 @@ def check(pasword):
     else:
         return False
 
-def abstr(text):
+def abstra(text):
     sta=0
+    text=text.replace('&nbsp;',' ')
     while sta<len(text) and sta < 160:
         if text[sta] == '<':
             end = sta
@@ -47,6 +55,36 @@ def abstr(text):
                     rew += 1
                     if rew:
                         text=text[:tem]+'\" style=\"width: 90px\">...'
+                        text=text[:tem]+'\">...'
                         break
             break
+    text=text.replace('<br>','\n')
+    return text
+
+
+
+
+
+
+
+
+
+def abstr(text,img=""):
+    text=text[:1200]
+    text=text.replace(u'&nbsp;',u' ')
+    text=text.replace(u'</p',u'\n<')
+    text=text.replace(u'</b',u'\n<')
+    text=text.replace(u'</h',u'\n<')
+    text=text.replace(u'<br>',u'\n')
+    def fn(x, y):
+        if x[-1] == "<" and y != ">":
+            return x
+        else:
+            return x+y
+    text=reduce(fn,text)
+    text=text.replace(u'<>',u'')
+    text=text.replace(u'\n\n\n',u'\n')
+    text=text.replace(u'\n\n',u'\n')
+    print text
+    text=text[:120]+'...'+'<center>'+img+'</center>'
     return text

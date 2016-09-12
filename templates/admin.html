@@ -4,20 +4,17 @@
 <title>{{ t }} - 烂柯居</title>
 {% endblock %}
 
-{% block page_content %}
+{% block content %}
 
 <div class="well" style='word-wrap:break-word;'>
 <br>
 {%- for ct in tem %}
-<div class="thumbnail">
-<span>{{ ct[0]|replace("\n", "<br>")|safe }}</span>
-{% if session.get('log') and ct[1] != "" %}
-<a class=" btn btn-info btn-xs " href="/del/{{ id }}/{{ ct[3] }}" role="button">删除</a>
-{% endif %}
+
+<pre>{{ ct[0] }}</pre>
 <div style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">
 <p>{{ ct[2] }} &nbsp &nbsp {{ ct[1] }}</p>
 </div>
-</div>
+<br><br><br><br>
 {%- endfor %}
 
 </div>
