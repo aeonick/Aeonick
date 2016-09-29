@@ -8,19 +8,69 @@
   font-style: normal;
 }
 
+
+.comm{border:1px solid #ddd;border-radius:5px;padding:3% 4%;margin:15px;color:666}
+.comm pre{line-height:1.4;font-size:14.5px;margin-top:8px;}
+.comm span{font-size:14.5px;font-weight:bold;}
+.comm span.ti{font-size:12.5px;font-style:italic;font-weight:normal;color:#aaa}
+
 .contain.nn{z-index:10;position:relative}
 
-.audc{height:26px;width:20%;display:inline-block;line-height:26px;overflow:hidden;cursor:default;}
-.audc:hover{background:#fff;}
+.audc{height:4vw;width:20%;display:inline-block;line-height:4vw;overflow:hidden;}
+.audc:hover{background:#B2DFEE;color:#fff}
 
 .well.tag{padding:10px 20px;word-break:keep-all;}
+
+.pusha{width:32%;display:inline-block;}
+
+#musc{height:65px;width:60px;border-radius:40px;line-height:40px;background:#fff;
+    color: #aaa;
+    font-size: 40px;
+    border:1px solid #B2DFEE;
+    margin-left:-40px;
+    padding-top:15px;
+    padding-left:20px;
+    position:relative;
+    z-index:100;
+    left:50%
+}
+#musc:hover{color:#888}
 
 .well.memo{margin:20px 8px;padding:10px 15px;overflow:hidden;word-break:break-all;border-radius:2px}
 
 s1{display:none}
 s1:hover{color:#222;}
 
-.ply{background:#d9eff7;height:26px;border-radius:8px;text-align:center}
+#ply{
+    display:none;
+    padding-left: 10px;
+    margin-left: 50px;
+    background: #FFF;
+    height: 4vw;
+    margin-top: -2vw;
+    border-radius: 0 1vw 1vw 0;
+    text-align: center;
+    position: relative;
+    top: -40px;
+    left: 8px;
+    border: 1px solid #B2DFEE;
+    margin-bottom:-40px;
+    z-index:20;
+}
+
+#audi{
+margin:-20px 2vw;
+margin-bottom:30px;
+-moz-user-select:none;
+-webkit-user-select:none;
+-ms-user-select:none;
+-khtml-user-select:none;
+user-select:none;
+font-size:2.2vw;
+color:#aaa;
+cursor:default;
+position:relative;
+}
 
 p,pre{margin:0}
 
@@ -33,6 +83,7 @@ html,body{height:100%;width:100%;margin:0;background:#f5f5f5;color:#545454;font-
 
 .maincon{margin-bottom:-80px;min-height:100%;}
 
+.well.wish{padding:10%;}
 
 a.nl{text-decoration:none;}
 
@@ -43,14 +94,18 @@ pre{white-space:pre-wrap;font-size:16.5px;line-height:2.2;font-family:Helvetica,
 
 .bg{color:#ddd;font-family:Lato,Avenir Next,sans-serif !important;font-weight:100;}
 
-nav{background:#666;height:36px;width:100%;opacity:0.25;position:fixed;top:0;z-index:1200}
+nav{background:#666;height:36px;width:100%;opacity:0.25;position:fixed;top:0;z-index:1200;-moz-user-select:none;
+-webkit-user-select:none;
+-ms-user-select:none;
+-khtml-user-select:none;
+user-select:none;}
 
 .navbu{background:#666;height:28px;padding:4px;color:#eee;font-size:18px;float:left;margin-left:1%;}
 .navbu:hover{background:#222;}
 
 .navbu.ind{margin-left:-10px;margin-right:10px}
 
-.navs{position:fixed;right:5%;top:36px;opacity:0.8}
+.navs{position:fixed;right:5%;top:36px;opacity:0.8;display:none}
 
 .push{height:80px;width:100%}
 
@@ -71,13 +126,12 @@ a.nul{text-decoration:none}
 
 .pushl{margin-left:10%}
 
-.well.aud{padding:15px;text-align:center}
 
 .footer{height:80px; background:#aaa;width:100%;color:#FFF;clear:both; font-style: italic;z-index:80;position:relative}
 
 hr.er{border-top:1px solid #ddd;width:80%;margin-left:0}
 
-.foote{position:relative;top:10px;margin-left: 50px;font-size:14px;font-weight:100}
+.foote{position:relative;top:10px;margin-left: 4%;font-size:14px;}
 
 span.logo{display:block;text-align:center;position:relative;top:135px;}
 
@@ -88,7 +142,7 @@ span.bars{color:#fff;font-size:25px;margin:5px;margin-right:6%;float:right;curso
 .navx.ind{border-top-left-radius: 5px;border-top-right-radius: 5px;}
 .navx.bott{border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;}
 
-.well{background:#FFF;border-radius:6px;margin:45px 10px;padding:30px 40px;box-shadow: 3px 3px 1px #ccc}
+.well{background:#FFF;border-radius:6px;margin:45px 10px;padding:30px 40px;box-shadow: 3px 3px 1px #ccc;word-break:break-all;clear:both}
 
 .well.memo hr{border: 0px solid #dedede;border-top-width: 1px;}
 
@@ -98,11 +152,11 @@ span.bars{color:#fff;font-size:25px;margin:5px;margin-right:6%;float:right;curso
 cir{width:180px;height:180px;background-color:#666;border-radius:90px;position:relative;top:-130px;float:left;font-family: 'Trebuchet MS',sans-serif;font-size:22px;color:#eee;}
 
 cir:hover{background:#FFF;color:#222}
-
+flash{background:#FCF8E3;border-radius:5px;border:1px solid #FAEBCC;padding:5px 12px;font-size:18px;color:#8A6D3B}
 
 .bg.do{font-size:8vw;text-align:center;position:relative;top:30%}
 .bg.no{font-size:6vw;}
-.contain{width:80%;margin:0 10%;}
+.contain{width:80%;margin:0 10%;z-index:1;position:relative}
 
 a{color:inherit;}
 
@@ -112,16 +166,14 @@ a{color:inherit;}
 .pagn a {
     border-radius: 15px;
     width: 30px;
-    height: 28px;
-    padding-top: 2px;
+    height: 30px;
     background: #fff;
     display: inline-block;
     text-decoration: none;
     text-align: center;
     font-size: 20px;
     color: #999;
-    font-weight: 100;
-    font-family: serif,FontAwesome;
+    line-height:30px;
     margin:1px
 }
 
@@ -161,9 +213,9 @@ button.sm:hover{color:#000;background:#eee}
 h1,h2,h3,h4,h5,h6{font-weight:500;margin:10px}
 small{color:#888}
 
-code{background:#eee !important;line-height:1.5;padding:12px;font-size:14px;margin:10px;border-radius:4px !important;}
+code{background:#f2f2f2 !important;border:1px solid #eee;line-height:1.5;padding:12px;font-size:14px;margin:10px;border-radius:4px !important;}
 
-blockquote.we{margin:15px 0;padding:0 15px;border:1px solid #eee;overflow:hidden}
+
 
 blockquote {
 background:#f9f9f9;
@@ -203,7 +255,7 @@ img.fil{width:80px;position:relative;left:-57px;top:-20px}
     .content{width:90%;margin-left:5%}
     .bg.do{font-size:10vw;}
     .bg.no{font-size:8vw;}
-    .contain{width:100%;margin:0;}
+    .contain{width:90%;margin:0 5%;}
 }
 @media only screen and (min-width: 420px) and (max-width: 768px){
     .content{width:90%;margin-left:5%}

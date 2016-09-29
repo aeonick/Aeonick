@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div style="height:80px"></div>
+<div class="contain">
+
+<div class="well wish">
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for message in messages %}
+        <flash>&#61913;&nbsp;{{ message[1] }}</flash>
+        <br><br><br>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<pre>
+<blockquote><h3>欢迎！
+许愿池是一个神奇的地方，你可以在这里尽情许愿，愿望不会被公开，而且它将更有可能被实现。</h3></blockquote>
+
+然而许愿池不是万能的，许愿前请<strong>仔细阅读以下说明</strong>：
+1.请确保自己许愿时限定了愿望的实现途径，否则后果自负。（如“我想有钱”，那么实现途径是工资，彩票，还是其他？）
+2.许愿池不能保证愿望100%会在规定期限内被实现。
+3.请确保愿望有实现的可能性，而且自己将为此行动。（如“我要中彩票”，那么我至少应该买张彩票。）
+4.许愿池会给你“有意义的巧合”，或是“小概率的偶然”。但它绝没有能力左右人心，所以请不要提出“奥巴马爱上我”这样的愿望。
+
+<strong>简单四步完成许愿！</strong>
+第一步，在脑海中明确自己的愿望与实现途径。
+第二步，投掷一枚硬币，投出正面（数字1）的请在月池许愿；投出背面（菊花）的请在日池许愿。如果你手中没有硬币，也可以看看现在的时间，奇数对应背面，偶数对应正面。
+第三步，进入自己对应的池中许愿。输入的内容以及署名没有任何要求。你可以写下自己的愿望，也可以输入一堆乱码。
+第四步，请尽量遗忘“自己曾经在这里许过愿”这件事。
+
+
+<center><h2><a href='#wish' class='nl'>开始许愿！</a></h2></center>
+</pre>
+</div>
+
+<div class="well" id="wish">
+<form method="POST">
+    <textarea name="comments" style="width:100%" rows=4 placeholder="日池在此"></textarea>
+    <br>
+    <button type="submit" style="float:right;margin:10px;">许愿!</button>
+    <input type="text" style="float:right;margin:10px; " class="form-control" name="authors" placeholder="署名或留空">
+<br><br><br><br><br>
+    <textarea name="commentm" style="width:100%" rows=4 placeholder="月池在此"></textarea>
+    <br>
+    <button type="submit" style="float:right;margin:10px;">许愿!</button>
+    <input type="text" style="float:right;margin:10px; " class="form-control" name="authorm" placeholder="署名或留空">
+</form>
+<br><br><br>
+</div>
+</div>
+
+
+{% endblock %}

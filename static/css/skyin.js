@@ -33,7 +33,6 @@ $(document).ready(function() {
             $("#nav").show();
         }
     }); 
-    $("#navs").hide();
     $("#navc").click(function(){
         $("#navs").toggle(200);
     });
@@ -94,7 +93,6 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-
     var souli='http://link.itiyun.com/fm/douban/iTiYue.mp3'
     var audio = document.getElementById("aud");
     var source = document.getElementById("sou");
@@ -127,10 +125,24 @@ $(document).ready(function() {
         event.stopPropagation();
         audio.volume += 0.1;
     });
-
-
-
-
+        var acti = 1;
+    $("#musc").click(function(){
+        if (acti == 1){
+            $("#musc").animate({left:'0',marginLeft:'-10px'});
+            $("#ply").fadeIn();
+            acti = 0;
+            return};
+            $("#musc").animate({left:'50%',marginLeft:'-40px'});
+            $("#ply").fadeOut();
+            acti = 1;
+    });
+    var audt=$('#audi').offset().top;
+    var audl=$('#audi').offset().left;
+    $(window).scroll( function() {
+        if($(window).scrollTop()>audt){
+            $('#audi').css({'top':$(window).scrollTop()-audt+40});
+        return;};
+        $('#audi').css({'top':'0'});
+    });
 });
-
 

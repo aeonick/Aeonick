@@ -48,13 +48,14 @@
 <br><br>
 
 {%- for ct in tem %}
-<blockquote class="we">
+<div class="comm">
+<span>{{ ct[2] }}</span>
+<span class="ti">{{ ct[1] }}</span>
 <pre>{{ ct[0] }}</pre>
 {% if session.get('log') and ct[1] != "" %}
 <a href="/del/{{ id }}/{{ ct[3] }}"><button class="sm">删除</button></a>
 {% endif %}
-<p class="xs" style="font-size: 14px;float:right">{{ ct[2] }} &nbsp &nbsp {{ ct[1] }}</p>
-</blockquote>
+</div>
 {%- endfor %}
 </div>
 
@@ -62,3 +63,4 @@
 
 
 {% endblock %}
+
