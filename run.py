@@ -101,6 +101,7 @@ def dele(bg_id):
             cur=get_db().cursor()
             cur.execute('DELETE FROM blog WHERE id = ? ',(bg_id,))
             cur.execute('DELETE FROM tag WHERE blog = ? ',(bg_id,))
+            cur.execute('DELETE FROM comm WHERE blog = ? ',(bg_id,))
             get_db().commit()
         except:
             return redirect(url_for('page',pg=1))
