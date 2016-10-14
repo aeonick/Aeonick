@@ -267,7 +267,6 @@ def heal():
 
 
 
-
 @app.route('/admin')
 def admin():
     if session.get('log'):
@@ -300,12 +299,6 @@ def wish():
                 return render_template('wish.html')
     return render_template('wish.html')
 
-@app.route('/exe')
-def exe():
-    cur=get_db().cursor()
-    cur.execute('ALTER TABLE comm ADD reply smallint;')
-    get_db().commit()
-    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
