@@ -155,5 +155,16 @@ $(document).ready(function() {
         $("#comment").attr("placeholder","回复刚才的评论，刷新页面撤销");
         $("#reply").attr("value",reid);
     });
+    $("#subm").click(function(){
+    $("#check").attr("value",12);
+    });
 });
 
+function confirm() {
+    if($("#check").val() == 12)
+    {
+    return true;
+    }
+    return false;
+
+};

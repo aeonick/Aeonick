@@ -13,13 +13,13 @@
 
 <div class="content">
     <br><br><br><br>
-    <form method="POST">
+    <form method="POST" onSubmit="return confirm();">
         <label>分类</label>
         <select name="file" style="width:80px">
-        <option value =1>分类1</option>
-        <option value =3>分类2</option>
-        <option value =4>分类3</option>
-        <option value =5>分类4</option>
+        <option value =1>闲聊</option>
+        <option value =3>编程</option>
+        <option value =4>杂谈</option>
+        <option value =5>转载</option>
         </select>
         <label>标签</label>
         <input type="text" name="tags" style="width:50%" value={{ tags }}>
@@ -33,7 +33,7 @@
         <textarea id="editor" name="editor" style="height:600px" type="text">{{ content }}</textarea>
         <script type="text/javascript">var editor = new wangEditor('editor');editor.create();</script>
         <br>
-        <button class="lg">发布博客</button>
+        <button id="subm" class="lg">发布博客</button><input id="check" style="display:none">
     </form>
     <br>
 </div>
