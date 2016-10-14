@@ -156,12 +156,12 @@ $(document).ready(function() {
         $("#reply").attr("value",reid);
     });
     $("#subm").click(function(){
-    $("#check").attr("value",12);
+        check=true;
     });
 });
 
 function confirm() {
-    if($("#check").val() == 12)
+    if(check==true)
     {
     return true;
     }
