@@ -37,7 +37,7 @@ def login():
         import aids
         if aids.check(request.form['passwd']):
             session['log'] = True
-            return redirect(url_for('admin'))
+            return redirect(url_for('new'))
     return render_template('login.html')
 @app.route('/logout')
 def logout():
@@ -159,7 +159,7 @@ def article(bg_id):
         if request.form['comment']:
                 author = request.form['author'] or u'访客'
                 cur=get_db().cursor()
-                cur.execute('insert into comm (content, author, blog) values (?, ?, ?)', (request.form['comment'], author, bg_id))
+                cur.execute('insert into comm (content, author, blog, reply) values (?, ?, ?, ?)', (request.form['comment'], author, bg_id, request.form['reply'] or None))
                 get_db().commit()
                 return redirect(url_for('article',bg_id=bg_id))
     try:
@@ -169,8 +169,24 @@ def article(bg_id):
     except:
         return render_template('error.html'), 404
     else:
-        cur.execute(' SELECT content, date, author,id FROM comm WHERE blog=? ORDER BY id DESC',(bg_id,))
-        tem=cur.fetchall() or [('快来发布第一条评论吧','',''),]
+        cur.execute(' SELECT content, date, author,id,reply FROM comm WHERE blog=? ORDER BY id DESC',(bg_id,))
+        tem=cur.fetchall() or []
+        tem=list(tem)
+        tem=map(lambda x:list(x),tem)
+        idli=map(lambda x:x[3],tem)
+        t=0
+        while t < len(tem):
+            if type(tem[t][4]) == int:
+                try:
+                    reid = idli.index(tem[t][4])
+                    tem[reid][4]=tem[reid][4] or []
+                    tem[reid][4].insert(0,tem[t])
+                    tem.pop(t)
+                    idli.pop(t)
+                    t -= 1
+                finally:
+                    pass
+            t += 1
         return render_template('article.html',cont=cont,id=bg_id,tem=tem)
 
 @app.route('/del/<int:bg_id>/<int:ccid>')
@@ -269,7 +285,7 @@ def static_from_root():
 @app.route('/wish',methods=['GET', 'POST'])
 def wish():
     if request.method == 'POST':
-        flash('许愿池收到了你的愿望')
+        flash('许愿池收到了你的愿望,祝你好运！')
         if request.form['comments']:
                 author = request.form['authors'] or u'访客'
                 cur=get_db().cursor()
@@ -284,7 +300,12 @@ def wish():
                 return render_template('wish.html')
     return render_template('wish.html')
 
-
+@app.route('/exe')
+def exe():
+    cur=get_db().cursor()
+    cur.execute('ALTER TABLE comm ADD reply smallint;')
+    get_db().commit()
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':

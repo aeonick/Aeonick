@@ -146,3 +146,14 @@ $(document).ready(function() {
     });
 });
 
+
+
+
+$(document).ready(function() {
+    $("rep").click(function(){
+        reid = $(this).attr("id");
+        $("#comment").attr("placeholder","回复刚才的评论，刷新页面撤销");
+        $("#reply").attr("value",reid);
+    });
+});
+

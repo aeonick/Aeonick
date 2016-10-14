@@ -15,11 +15,15 @@ def check(pasword):
     else:
         pasword += '1396'
     m.update(pasword)
-    if m.hexdigest()=='9bd414e8c3cdd92cc9df53cc5a2f98dc':
+    if m.hexdigest()=='01bf2bf3375b3fbaf8d2dac6dad08c84':
         return True
     else:
         return False
 
+
+
+
+#历史遗留代码，无视之
 def abstra(text):
     sta=0
     text=text.replace('&nbsp;',' ')

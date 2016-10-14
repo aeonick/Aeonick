@@ -8,11 +8,25 @@
   font-style: normal;
 }
 
+.tx{
+    background-image: url(http://i1.piimg.com/567571/59262810b1794389.jpg);
+    background-size: 90px 90px;
+    height: 90px;
+    width: 90px;
+    margin:0 auto;
+    border: 1px groove #fff;
+    border-radius: 15px;}
 
-.comm{border:1px solid #ddd;border-radius:5px;padding:3% 4%;margin:15px;color:666}
-.comm pre{line-height:1.4;font-size:14.5px;margin-top:8px;}
+.comm{color:666;overflow:hidden}
+.comm pre{line-height:1.4;font-size:14.5px;margin-top:8px;margin-left:5px;}
 .comm span{font-size:14.5px;font-weight:bold;}
-.comm span.ti{font-size:12.5px;font-style:italic;font-weight:normal;color:#aaa}
+.comm span.ti{font-size:12.5px;font-weight:normal;font-style:italic;color:#aaa;margin-left:10px}
+.comm rep{font-size:12px;font-weight:normal;color:#aaa;cursor:default;display:inline}
+.comm hr{FILTER: alpha(opacity=100,finishopacity=0,style=1);margin:25px -30px;clear:both}
+.comm p{text-align:right;color:#aaa;font-size:14px;margin-top:10px}
+.comm a{text-decoration:none;}
+.comm.re{margin-left:20px;padding-left:20px}
+.comm.re hr{margin:15px -30px;}
 
 .contain.nn{z-index:10;position:relative}
 
@@ -142,7 +156,7 @@ span.bars{color:#fff;font-size:25px;margin:5px;margin-right:6%;float:right;curso
 .navx.ind{border-top-left-radius: 5px;border-top-right-radius: 5px;}
 .navx.bott{border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;}
 
-.well{background:#FFF;border-radius:6px;margin:45px 10px;padding:30px 40px;box-shadow: 3px 3px 1px #ccc;word-break:break-all;clear:both}
+.well{background:#FFF;border-radius:6px;margin:45px 10px;padding:30px 40px;box-shadow: 3px 3px 1px #ccc;word-break:break-all;clear:both;}
 
 .well.memo hr{border: 0px solid #dedede;border-top-width: 1px;}
 

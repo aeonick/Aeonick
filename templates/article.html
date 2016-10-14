@@ -32,29 +32,60 @@
     </div>
     <br>
     <br>
+    <div align="center">
+    <div name="dashmain" id="dash-main-id-878bd7" class="dash-main-2 878bd7-2"></div><script type="text/javascript" charset="utf-8" src="http://www.dashangcloud.com/static/ds.js"></script>
+    <h4 id="-1"><small>烂柯想攒钱买主机，所以请支持下吧~</small></h4>
+    </div>
     <br>
 </div>
 
 <div class="well">
 
 <form method="POST">
-    <textarea class="form-control" style="width:100%;margin-bottom:10px" name="comment" rows=3 placeholder="一句话吐槽"></textarea>
+    <textarea style="width:100%;margin-bottom:10px" name="comment" id="comment" rows=3 placeholder="一句话吐槽"></textarea>
     <br>
     <div style="float:right">
-    <input type="text" class="form-control" name="author" placeholder="输入您的昵称或直接留空">
+    <input type="text" name="author" placeholder="输入您的昵称或直接留空">
     <button type="submit" class="sm">发布评论!</button>
     </div>
+    <input type="text" id="reply" name="reply" style="display:none">
 </form>
 <br><br>
 
 {%- for ct in tem %}
 <div class="comm">
+<HR color=#ddd SIZE=1>
 <span>{{ ct[2] }}</span>
-<span class="ti">{{ ct[1] }}</span>
+<a href="#-1"><rep id="{{ ct[3] }}">&#61714;&nbsp;回复</rep></a>
 <pre>{{ ct[0] }}</pre>
+<p>{{ ct[1] }}</p>
 {% if session.get('log') and ct[1] != "" %}
 <a href="/del/{{ id }}/{{ ct[3] }}"><button class="sm">删除</button></a>
 {% endif %}
+
+
+
+{% if ct[4] %}
+{%- for ctt in ct[4] %}
+
+
+
+<div class="comm re">
+<HR color=#ddd SIZE=1>
+<span>{{ ctt[2] }}</span><span class="ti">{{ ctt[1] }}</span>
+<pre>{{ ctt[0] }}</pre>
+
+{% if session.get('log') and ct[1] != "" %}
+<a href="/del/{{ id }}/{{ ctt[3] }}"><button class="sm">删除</button></a>
+{% endif %}
+</div>
+
+
+{%- endfor %}
+{% endif %}
+
+
+
 </div>
 {%- endfor %}
 </div>
