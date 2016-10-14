@@ -15,4 +15,5 @@ A simple blog based on flask+sqlite3+bootstrap
 
 5.enjoy~
 
-初始管理密码为000000，可在aids.py中修改盐和密码
+初始管理密码为000000，可进入/login输入密码获取管理权限，/new界面可以发布博客
+盐和密码可在aids.py中修改
