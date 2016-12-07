@@ -1,22 +1,5 @@
 # -*- coding: utf-8 -*-
-from blog import app
-from flask import Flask, g
-import sqlite3
-
-#链接和关闭数据库的三个函数
-def get_db():
-    if not hasattr(g, 'db'):
-        g.db = connect_db()
-    return g.db
-
-@app.teardown_appcontext
-def close_db(error):
-    if hasattr(g, 'db'):
-        g.db.close()
-
-def connect_db():
-    rv = sqlite3.connect(app.config['DATABASE'])
-    return rv
+from blogDB import get_db
 
 #定义类
 class password:
@@ -30,7 +13,7 @@ class password:
         else:
             return False
         m.update(self.pwd)
-        if m.hexdigest()=='01bf2bf3375b3fbaf8d2dac6dad08c84':
+        if m.hexdigest()=='9bd414e8c3cdd92cc9df53cc5a2f98dc':
             return True
         else:
             return False
@@ -39,7 +22,11 @@ class Article:
     def __init__(self, id):
         self.id = id
     def getExit(self):
-        pass
+        blogdb = get_db()
+        cur = blogdb.cursor()
+        cur.execute('SELECT id, title, abstract, tag, date, file FROM blog where id = ?',(self.id,))
+        self.exit = cur.fetchall()[0]
+        return self.exit
     def getArti(self):
         blogdb = get_db()
         cur = blogdb.cursor()
@@ -81,7 +68,7 @@ class Article:
         blogdb.commit()
 
 class comment:
-    def __init__(self, id):
+    def __init__(self, id = 0 ):
         self.id = id
     def commList(self):
         try:
@@ -109,6 +96,13 @@ class comment:
             self.cList = []
         finally:
             return self.cList
+    def getNew(self):
+        blogdb = get_db()
+        cur = blogdb.cursor()
+        cur.execute(' SELECT content, date, author, id, blog FROM comm ORDER BY id DESC LIMIT 12')
+        temp = cur.fetchall() or []
+        self.cList = temp
+        return self.cList
     def insert(self, content, author, reply):
         author = author or u'访客'
         reply = reply or None
@@ -121,6 +115,47 @@ class comment:
         cur = blogdb.cursor()
         cur.execute('DELETE FROM comm WHERE id = ? ',(self.id,))
         blogdb.commit()
+
+class artiList:
+    def __init__(self,method = '',key = '',page = 1):
+        self.method = method
+        self.key = key
+        self.page = ( page - 1 ) * 8
+    def getAl(self):
+        result = []
+        for arti in self.al:
+            temp = Article(arti)
+            temp = temp.getExit()
+            result.append(temp)
+        self.result = result
+        return self.result
+    def getLen(self):
+        blogdb = get_db()
+        cur = blogdb.cursor()
+        if self.method == 'file':
+            cur.execute('SELECT count(*) FROM blog WHERE file = ?;',(self.key,))
+        elif self.method == 'tag':
+            cur.execute('SELECT count(*) FROM tag WHERE tag = ?;',(self.key,))
+        else:
+            cur.execute('SELECT count(*) FROM blog;')
+        rawlen = cur.fetchall()
+        rawlen = int(rawlen[0][0])
+        self.len = (rawlen+7)/8 or 1
+        return self.len
+    def alUpdate(self):
+        blogdb = get_db()
+        cur = blogdb.cursor()
+        if self.method == 'file':
+            cur.execute(' SELECT id FROM blog WHERE file = ? ORDER BY id DESC LIMIT 8 OFFSET ?',(self.key,self.page,))
+        elif self.method == 'tag':
+            cur.execute('select blog from tag where tag = ? LIMIT 8 OFFSET ?',(self.key,self.page,))
+        else:
+            cur.execute(' SELECT id FROM blog ORDER BY id DESC LIMIT 8 OFFSET ?',(self.page,))
+        altemp = cur.fetchall()
+        altemp = map(lambda x: int(x[0]),altemp)
+        altemp.sort(reverse = True)
+        self.al = altemp
+        return self.al
 
 
 

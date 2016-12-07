@@ -5,16 +5,24 @@
 {% endblock %}
 
 {% block content %}
-
-<div class="well" style='word-wrap:break-word;'>
-<br>
-{%- for ct in tem %}
-
-<pre>{{ ct[0] }}</pre>
-<div style="color: rgb(170, 170, 170); font-style: italic;" class="text-right">
-<p>{{ ct[2] }} &nbsp &nbsp {{ ct[1] }} &nbsp &nbsp {{ ct[3] }}</p>
+<div style='margin:45px;margin-top:100px;position:relative'>
+<a href="/new"><button id="subm" class="lg">发布博客</button></a>
 </div>
-<br><br><br><br>
+<div class="well" style='margin:30px;word-wrap:break-word;position:relative'>
+<h3>最新评论</h3>
+<br>
+
+
+{%- for ct in tem %}
+<div class="comm">
+<HR color=#ddd SIZE=1>
+<span>{{ ct[2] }}-----{{ ct[1] }}</span>
+<pre>{{ ct[0] }}</pre>
+<span>来源：{{ ct[4] }}</span>
+<span><a href="/article/{{ ct[4] }}" style="margin-left:10px;"><button class="sm">跳转</button></a></span>
+<span><a href="/del/{{ ct[3] }}"><button class="sm">删除</button></a></span>
+
+</div>
 {%- endfor %}
 
 </div>

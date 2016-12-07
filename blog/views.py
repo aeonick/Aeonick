@@ -2,7 +2,7 @@
 
 from blog import app
 from flask import Flask, render_template, session, redirect, url_for, request, g, flash, send_from_directory
-from mylib import *
+from mylib import password,comment,Article,artiList
 
 
 
@@ -19,6 +19,13 @@ def internal_server_error(e):
 def bad_request(e):
     return render_template('error.html'), 404
 
+
+
+#自动关闭数据库连接
+@app.teardown_appcontext
+def close_db(error):
+    if hasattr(g, 'db'):
+        g.db.close()
 
 
 
@@ -106,7 +113,9 @@ def memo():
         return redirect(url_for('memo'))
     tem = curComm.commList()
     return render_template('memo.html',tem = tem)
-
+@app.route('/article/0')
+def arti0():
+    return redirect(url_for('memo'))
 
 
 #许愿池
@@ -126,25 +135,21 @@ def wish():
 
 
 
-#文章检索、分类模块
+#文章分类、标签检索模块
 @app.route('/')
 def index():
-    blogdb = get_db()
-    cur = blogdb.cursor()
-    cur.execute(' SELECT id, title, abstract,tag,date,file FROM blog ORDER BY id DESC LIMIT 8')
-    tem = cur.fetchall()
-    cur.execute('SELECT count(*) FROM blog;')
-    pmax = ((cur.fetchall()[0][0]+7)/8 or 1)
+    curPage = artiList(page=1)
+    curPage.alUpdate()
+    tem = curPage.getAl()
+    pmax = curPage.getLen()
     return render_template('index.html',tem = tem,pmax = pmax,pg = 1)
 
 @app.route('/page/<int:pg>')
 def page(pg):
-    blogdb = get_db()
-    cur = blogdb.cursor()
-    cur.execute(' SELECT id, title, abstract,tag,date,file FROM blog ORDER BY id DESC LIMIT 8 OFFSET ?',(pg*8-8,))
-    tem = cur.fetchall()
-    cur.execute('SELECT count(*) FROM blog;')
-    pmax = ((cur.fetchall()[0][0]+7)/8 or 1)
+    curPage = artiList(page=pg)
+    curPage.alUpdate()
+    tem = curPage.getAl()
+    pmax = curPage.getLen()
     if pg > pmax or pg < 1:
         return render_template('error.html'), 404
     else:
@@ -152,15 +157,10 @@ def page(pg):
 
 @app.route('/arch<int:arc>/<int:pg>')
 def arch(arc,pg):
-    blogdb = get_db()
-    cur = blogdb.cursor()
-    cur.execute(' SELECT id, title, abstract,tag,date,file FROM blog WHERE file = ? ORDER BY id DESC LIMIT 8 OFFSET ?',(arc,pg*8-8,))
-    tem = cur.fetchall()
-    try:
-        cur.execute('SELECT count(*) FROM blog WHERE file = ?;',(arc,))
-        pmax = (cur.fetchall()[0][0]+7)/8
-    finally:
-        pmax = pmax or 1
+    curPage = artiList('file',arc,pg)
+    curPage.alUpdate()
+    tem = curPage.getAl()
+    pmax = curPage.getLen()
     if pg > pmax or pg < 1:
         return render_template('error.html'), 404
     else:
@@ -168,22 +168,10 @@ def arch(arc,pg):
 
 @app.route('/arch/<tag>/<int:pg>')
 def tag(tag,pg):
-    blogdb = get_db()
-    cur = blogdb.cursor()
-    cur.execute('select blog from tag where tag = ? LIMIT 8 OFFSET ?',(tag,pg*8-8))
-    tem = cur.fetchall()
-    blogs = map(lambda x: int(x[0]),tem)
-    blogs.sort(reverse = True)
-    tem = []
-    item = 0
-    for blog in blogs:
-        cur.execute(' SELECT id, title, abstract,tag,date,file FROM blog WHERE id = ?',(blog,))
-        tem.append(cur.fetchall()[0])
-    try:
-        cur.execute('SELECT count(*) FROM tag WHERE tag = ?;',(tag,))
-        pmax = (cur.fetchall()[0][0]+7)/8
-    finally:
-        pmax = pmax or 1
+    curPage = artiList('tag',tag,pg)
+    curPage.alUpdate()
+    tem = curPage.getAl()
+    pmax = curPage.getLen()
     if pg > pmax or pg < 1:
         return render_template('error.html'), 404
     else:
@@ -191,33 +179,11 @@ def tag(tag,pg):
 
 
 
-#历史遗留，标签功能出故障时可以用它解决
-@app.route('/heal')
-def heal():
-    blogdb = get_db()
-    cur = blogdb.cursor()
-    cur.execute('delete from tag')
-    cur.execute('SELECT id,tag from blog')
-    cont = cur.fetchall()
-    for connn in cont:
-        tags = connn[1]
-        bg_id = connn[0]
-        tags = tags.split(',')
-        for tag in tags:
-            cur.execute('insert into tag (tag, blog) values (?, ?)', (tag, bg_id))
-        blogdb.commit()
-    return redirect(url_for('page',pg = 1))
-
-
-
 #管理页面
 @app.route('/admin')
 def admin():
     if session.get('log'):
-        blogdb = get_db()
-        cur = blogdb.cursor()
-        cur.execute(' SELECT content, author, date,blog FROM comm ORDER BY id DESC')
-        tem = cur.fetchall()
+        tem=comment().getNew()
         return render_template('admin.html',tem = tem)
     else:
         return redirect(url_for('login'))
