@@ -13,7 +13,7 @@ class password:
         else:
             return False
         m.update(self.pwd)
-        if m.hexdigest()=='9bd414e8c3cdd92cc9df53cc5a2f98dc':
+        if m.hexdigest()=='01bf2bf3375b3fbaf8d2dac6dad08c84':
             return True
         else:
             return False
