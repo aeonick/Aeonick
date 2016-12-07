@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block bggg %}
+<div id="banner">
+<!--<div style="position:absolute;top:140px;left:12vw;color:#ddd"><pre>
+从前
+有把斧子
+在做一个很长很长的梦
+......
+</pre></div>-->
+</div>
+{% endblock %}
+
+{% block bgg %}
+<script src="/static/css/index.js"></script>
+<div id="snow"></div>
+<div id="bg" class="bi">
+<div id="tela" class="bg do">Do What Thou Wilt</div>
+<div id="chao" class="contain ch">
+<div class="bg no" style="">Nothing is Impossible</div>
+<br>
+<div class="bg no" style="text-align:right">Everything is Permitted</div>
+</div>
+<mask id="mask">&#61702;</mask>
+</div>
+{% endblock %}
+
+{% block arti %}
+{%- for t in tem %}
+<div class="well">
+    <a href="/article/{{ t[0] }}" target="_blank" class="nul"><h2 class="cen">{{ t[1] }}</h2></a>
+    <div class="disp">Posted on : {{ t[4][5:7] }}/{{ t[4][8:10] }}/{{ t[4][:4] }}</div>
+    <div class="finu">
+    <img src="/static/img/2.jpg" class="fil" />
+    <div class="fil">{% if t[5]==1 %}闲聊{% elif t[5]==3 %}编程{% elif t[5]==4 %}杂谈{% elif t[5]==5 %}闲聊{% endif %}</div>
+    </div>
+    <pre>{{ t[2]|safe }}</pre>
+    <div class="ltag">
+    <span>&#61484;</span>
+    {%- for tag in (t[3] or '').split(',') %}
+    <a href="/arch/{{ tag }}/1"  class="nul"><span class="tag">{{ tag }}</span></a>
+    {%- endfor %}
+    </div>
+    <a href="/article/{{ t[0] }}" class="nul"><div class="center"><button class="sm">阅读全文</button></div></a>
+    <br>
+    </div>
+{%- endfor %}
+
+<div class="pagn">
+{% if not pg == 1 %}
+    <a href="/page/{{ pg-1 }}">&#61696;</a>
+{% endif %}
+{%- for cu in range(pmax) %}
+{% if pg == cu+1 %}
+    <a href="/page/{{ cu+1 }}" class="act">{{ cu+1 }}</a>
+{% else %}
+    <a href="/page/{{ cu+1 }}">{{ cu+1 }}</a>
+{% endif %}
+{%- endfor %}
+{% if not pg==pmax %}
+    <a href="/page/{{ pg+1 }}">&#61697;</a>
+{% endif %}
+</div>
+
+{% endblock %}

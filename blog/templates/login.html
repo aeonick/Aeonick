@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="contain" style="z-index:10;position:relative">
+<div class="pushi"></div>
+<div class="pushl">
+<p style="font-size:1.4em; ">输入口令，发布新博客！</p>
+<br><br><br>
+<form method="POST">
+    <input type="password" name="passwd" />
+    <br>
+    <br>
+    <br>
+    <button type="submit" class="sm">确认!</button>
+</form> 
+<br><br>
+<p class="xs">这里是更新博客的入口。如果您是访客，欢迎您在博文下评论</p>
+<br>
+<p class="xs"><a href="/">点击这里</a>回到首页</p>
+</div>
+</div>
+{% endblock %}

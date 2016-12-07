@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<head>
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<link href="/static/css/skyin.css" rel="stylesheet">
+<link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.feedsoso.com/feed/yzlmru" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/static/css/skyin.js"></script>
+<meta http-equiv="Content-Language" content="zh-cn">
+{% block title %}<title>个人博客</title>{% endblock %}
+</head>
+
+<body>
+{% block bg %}{% endblock %}
+<div id="main" class="main">
+<div class="maincon">
+<canvas id="cvs"></canvas>
+<nav id="nav">
+<a href="/"><cir><span class="logo">LOGO</span></cir></a>
+<div class="navbl">
+<a href="/page/1"><div class="navbu ind">博客首页</div></a>
+<a href="/arch1/1"><div class="navbu">闲聊</div></a>
+<a href="/arch3/1"><div class="navbu">编程</div></a>
+<a href="/arch4/1"><div class="navbu">杂谈</div></a>
+<a href="/arch5/1"><div class="navbu">转载</div></a>
+<a href="/memo"><div class="navbu">留言板</div></a>
+<a href="/wish"><div class="navbu">许愿池</div></a>
+<a href="/login"><div class="navbu">登录</div></a>
+</div>
+<s1 ><span id="navc" class="bars">&#61641;</span></s1>
+<div id="navs" class="navs">
+<a href="/page/1" class="nl"><div class="navx ind">首页</div></a>
+<a href="/arch1/1" class="nl"><div class="navx">闲聊</div></a>
+<a href="/arch3/1" class="nl"><div class="navx">编程</div></a>
+<a href="/arch4/1" class="nl"><div class="navx">杂谈</div></a>
+<a href="/arch5/1" class="nl"><div class="navx">转载</div></a>
+<a href="/memo" class="nl"><div class="navx">留言板</div></a>
+<a href="/wish" class="nl"><div class="navx bott">许愿池</div></a>
+</div>
+</nav>
+
+
+
+
+{% block content %}
+
+
+
+<div class="pushi"></div>
+
+
+<div class="content">
+
+<div class="arti">
+
+{% block arti %}
+{% endblock %}
+
+</div>
+<div class="sideb">
+
+<div class="well tag">
+<p style="font-weight:600">关于</p>
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=1)" width="96%" color=#ddd SIZE=1>
+</div>
+
+
+<div id="muscrl">
+<div id="audi">
+    <div id="musc">&#61441;</div>
+    <audio id="aud" loop preload="metadata">
+    <source id="sou" type="audio/mpeg" />
+    </audio>
+    <div id="ply">
+    <div id="pp" class="audc">
+    &#61515;
+    </div>
+    <div id="cm" class="audc">
+    &#61473;
+    </div>
+    <div id="vd" class="audc">
+    &#61479;
+    </div>
+    <div id="vu" class="audc">
+    &#61480;
+    </div>
+    </div>
+</div>
+</div>
+
+
+
+<div class="well tag">
+<p style="font-weight:600">标签</p>
+</div>
+
+
+<div class="well tag">
+<p style="font-weight:600">友情链接</p>
+</div>
+
+
+
+</div>
+
+
+{% endblock %}
+
+
+
+<div class="push"></div>
+</div>
+<div class="footer">
+<div class="foote">
+<p>Powered by 烂柯</p>
+<a href="/article/4"  target="_blank">﻿博客源码</a>
+<p>本站所有原创内容遵循<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/legalcode" target="_blank">知识共享署名3.0</a>，欢迎转载</p>
+</div>
+</div>
+</div>
+</body>

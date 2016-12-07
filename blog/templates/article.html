@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+
+{% block meta %}
+{% endblock %}
+
+
+
+{% block title %}
+<title>{{ cont[0] }}</title>
+{% endblock %}
+
+{% block arti %}
+<script type="text/javascript" src="//cdn.bootcss.com/highlight.js/9.6.0/highlight.min.js"></script>
+<link href="//cdn.bootcss.com/highlight.js/9.6.0/styles/googlecode.min.css" rel="stylesheet">
+
+<div class="well">
+    <h1>{{ cont[0] }}</h1>
+    {% if session.get('log') %}
+    <a style="margin-left:10px" href="/edit/{{ id }}"><button class="sm">编辑</button></a>
+    <a style="margin-left:5px" href="/dele/{{ id }}"><button class="sm">删除</button></a>
+    {% endif %}
+    <p class="xs" style="float:right">{{ cont[1] }}</p>
+    <br><br>
+    <arti>{{ cont[2]|safe }}</arti>
+    <br>
+    <div class="ltag">
+    <span>&#61484;</span>
+    {%- for tag in (cont[3] or '').split(',') %}
+    <a href="/arch/{{ tag }}/1"  class="nul"><span class="tag">{{ tag }}</span></a>
+    {%- endfor %}
+    </div>
+    <br>
+</div>
+
+<div class="well">
+
+<form method="POST">
+    <textarea style="width:100%;margin-bottom:10px" name="comment" id="comment" rows=3 placeholder="一句话吐槽"></textarea>
+    <br>
+    <div style="float:right">
+    <input type="text" name="author" placeholder="输入您的昵称或直接留空">
+    <button type="submit" class="sm">发布评论!</button>
+    </div>
+    <input type="text" id="reply" name="reply" style="display:none">
+</form>
+<br><br>
+
+{%- for ct in tem %}
+<div class="comm {{ ct[4] }}">
+<HR color=#ddd SIZE=1>
+<span>{{ ct[2] }}</span>
+<a href="#-1"><rep class='{{ ct[4] }}' id="{{ ct[3] }}">&#61714;&nbsp;回复</rep></a>
+<pre>{{ ct[0] }}</pre>
+<p>{{ ct[1] }}</p>
+{% if session.get('log') and ct[1] != "" %}
+<a href="/del/{{ ct[3] }}"><button class="sm">删除</button></a>
+{% endif %}
+
+
+
+
+
+
+
+</div>
+{%- endfor %}
+</div>
+
+
+
+
+{% endblock %}
+
