@@ -5,11 +5,11 @@ A simple blog based on flask+sqlite3
 
 使用方法：
 
-1.安装python2.7和virtualenv(或直接安装flask)
+1.安装python2.7和flask
 
-2.下载源码至，解压后把文件夹放在D盘根目录下，
+2.下载源码，解压后把文件夹放在D盘根目录下，
 
-3.windows下双击run.bat即可启动，已安装flask的朋友双击run.py即可
+3.双击run.py即可启动，安装了virtualenv的朋友双击run.bat即可（windows下）
 
 4.浏览器中打开127.0.0.1:5000
 
