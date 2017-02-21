@@ -37,11 +37,14 @@
         <textarea id="editor" name="editor" style="height:600px" type="text">{{ curArti.content }}</textarea>
         <script type="text/javascript">
         var editor = new wangEditor('editor');
-        editor.config.uploadImgUrl = 'https://sm.ms/api/upload';
-        editor.config.uploadImgFileName = 'smfile';
+        editor.config.uploadImgUrl = 'http://upload.qiniu.com/';
+        editor.config.uploadImgFileName = 'file';
+        editor.config.uploadParams = {
+        token: '{{ token }}',
+        };
         editor.config.uploadImgFns.onload = function (resultText, xhr) {
             var originalName = editor.uploadImgOriginalName || '';  
-            resultText = JSON.parse(resultText).data.url;
+            resultText = 'http://yourname/'+JSON.parse(resultText).key; //这里yourname写自己的七牛外链默认域名
             editor.command(null, 'InsertImage', resultText);
         };
         editor.create();
