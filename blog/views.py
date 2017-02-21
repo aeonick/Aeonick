@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from blog import app
-from flask import Flask, render_template, session, redirect, url_for, request, g, flash, send_from_directory
+from flask import Flask, jsonify, render_template, session, redirect, url_for, request, g, flash, send_from_directory
 from mylib import password,comment,Article,artiList
-
+from qiniu import getToken
 
 
 #异常处理
@@ -49,11 +49,11 @@ def logout():
 @app.route('/new', methods = ['GET', 'POST'])
 def new():
     if session.get('log'):
+        curArti = Article(0)
         if request.method == 'POST':
-            curArti = Article(0)
             curArti.update(request.form['title'],request.form['tags'],request.form['img'],request.form['file'],request.form['editor'])
             return redirect(url_for('page',pg = 1))
-        return render_template('edit.html')
+        return render_template('edit.html',curArti = curArti,token=getToken())
     return redirect(url_for('page',pg = 1))
 
 @app.route('/edit/<int:bg_id>', methods = ['GET', 'POST'])
@@ -67,22 +67,19 @@ def edit(bg_id):
         if request.method  == 'POST':
             curArti.update(request.form['title'],request.form['tags'],request.form['img'],request.form['file'],request.form['editor'])
             return redirect(url_for('article',bg_id = bg_id))
-        return render_template('edit.html',content = curArti.content,title = curArti.title,tags = curArti.tag)
+        return render_template('edit.html',curArti = curArti,token=getToken())
     return redirect(url_for('page',pg = 1))
 
-@app.route('/dele/<int:bg_id>')
-def dele(bg_id):
-    if session.get('log'):
-        curArti = Article(bg_id)
-        curArti.delArti()
-    return redirect(url_for('page',pg = 1))
-
-@app.route('/del/<int:ccid>')
-def delet(ccid):
-    if session.get('log'):
-        curComm = comment(ccid)
-        curComm.dele()
-    return redirect(request.referrer)
+@app.route('/del/<int:id>', methods = ['GET', 'POST'])
+def dele(id):
+    type = request.form.get('type', 2, type=int)
+    pid = request.form.get('pid', -1, type=int)
+    if session.get('log') and pid==id:
+        if type == 0:
+            Article(pid).delArti()
+        elif type ==1:
+            comment(pid).dele()
+    return jsonify(type=type,pid=pid)
 
 
 
@@ -90,28 +87,26 @@ def delet(ccid):
 @app.route('/article/<int:bg_id>', methods = ['GET', 'POST'])
 def article(bg_id):
     if request.method == 'POST' and request.form['comment']:
-        tem = comment(bg_id)
-        tem.insert(request.form['comment'],request.form['author'],request.form['reply'])
+        newCom = comment(bg_id)
+        newCom.insert(request.form['comment'],request.form['author'],request.form['reply'])
         return redirect(url_for('article',bg_id = bg_id))
     try:
         curArti = Article(bg_id)
-        cont = curArti.getArti()
-        tem = comment(bg_id)
-        tem = tem.commList()
+        curArti.getArti()
     except:
         return render_template('error.html'), 404
-    return render_template('article.html',cont = cont,id = bg_id,tem = tem)
+    return render_template('article.html',curArti = curArti,id = bg_id)
 
 
 
 #留言板
 @app.route('/memo',methods = ['GET', 'POST'])
 def memo():
-    curComm = comment(0)
+    curCom = comment(0)
     if request.method == 'POST' and request.form['comment']:
-        curComm.insert(request.form['comment'], request.form['author'], None)
+        curCom.insert(request.form['comment'], request.form['author'], None)
         return redirect(url_for('memo'))
-    tem = curComm.commList()
+    tem = curCom.commList()
     return render_template('memo.html',tem = tem)
 @app.route('/article/0')
 def arti0():
@@ -140,44 +135,42 @@ def wish():
 def index():
     curPage = artiList(page=1)
     curPage.alUpdate()
-    tem = curPage.getAl()
+    results = curPage.getAl()
     pmax = curPage.getLen()
-    return render_template('index.html',tem = tem,pmax = pmax,pg = 1)
+    return render_template('index.html',results = results,pmax = pmax,pg = 1)
 
 @app.route('/page/<int:pg>')
 def page(pg):
     curPage = artiList(page=pg)
     curPage.alUpdate()
-    tem = curPage.getAl()
+    results = curPage.getAl()
     pmax = curPage.getLen()
     if pg > pmax or pg < 1:
         return render_template('error.html'), 404
     else:
-        return render_template('page.html',tem = tem,pmax = pmax,pg = pg)
+        return render_template('page.html',results = results,pmax = pmax,pg = pg)
 
 @app.route('/arch<int:arc>/<int:pg>')
 def arch(arc,pg):
     curPage = artiList('file',arc,pg)
     curPage.alUpdate()
-    tem = curPage.getAl()
+    results = curPage.getAl()
     pmax = curPage.getLen()
     if pg > pmax or pg < 1:
         return render_template('error.html'), 404
     else:
-        return render_template('page.html',tem = tem,pmax = pmax,pg = pg)
+        return render_template('page.html',results = results,pmax = pmax,pg = pg)
 
 @app.route('/arch/<tag>/<int:pg>')
 def tag(tag,pg):
     curPage = artiList('tag',tag,pg)
     curPage.alUpdate()
-    tem = curPage.getAl()
+    results = curPage.getAl()
     pmax = curPage.getLen()
     if pg > pmax or pg < 1:
         return render_template('error.html'), 404
     else:
-        return render_template('page.html',tem = tem,pmax = pmax,pg = pg)
-
-
+        return render_template('page.html',results = results,pmax = pmax,pg = pg)
 
 #管理页面
 @app.route('/admin')
@@ -187,7 +180,6 @@ def admin():
         return render_template('admin.html',tem = tem)
     else:
         return redirect(url_for('login'))
-
 
 
 #robots.txt
