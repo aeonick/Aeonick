@@ -16,22 +16,36 @@
     <form method="POST" name="form" onSubmit="return confirm();">
         <label>分类</label>
         <select name="file" style="width:80px">
-        <option value =1>闲聊</option>
-        <option value =3>编程</option>
-        <option value =4>杂谈</option>
-        <option value =5>转载</option>
+        <option value =1 {% if curArti.file==1 %}selected="selected"{% endif %}>分类1</option>
+        <option value =3 {% if curArti.file==3 %}selected="selected"{% endif %}>分类2</option>
+        <option value =4 {% if curArti.file==4 %}selected="selected"{% endif %}>分类3</option>
+        <option value =5 {% if curArti.file==5 %}selected="selected"{% endif %}>分类4</option>
         </select>
         <label>标签</label>
-        <input type="text" name="tags" style="width:50%" value={{ tags }}>
+        <input type="text" name="tags" style="width:60%" value="{{ curArti.tag }}">
         <br><br>
         <label>标题</label>
-        <input type="text" name="title" style="width:60%" value={{ title }}>
+        <input type="text" name="title" style="width:80%" value="{{ curArti.title }}">
         <br><br>
         <label>摘要图</label>
-        <input type="text" name="img" style="width:60%" value={{ img }}>
+        <input type="text" id="img0" name="img" style="width:80%;"><br>
+        <label>快速设置</label>
+        <input type="radio" name="abi" id="imgc"/> 选择
+        <input type="radio" checked="checked" name="abi" id="imgd" /> 取消
+        <div id="imgbox" style=""></div>
         <br><br>
-        <textarea id="editor" name="editor" style="height:600px" type="text">{{ content }}</textarea>
-        <script type="text/javascript">var editor = new wangEditor('editor');editor.create();</script>
+        <textarea id="editor" name="editor" style="height:600px" type="text">{{ curArti.content }}</textarea>
+        <script type="text/javascript">
+        var editor = new wangEditor('editor');
+        editor.config.uploadImgUrl = 'https://sm.ms/api/upload';
+        editor.config.uploadImgFileName = 'smfile';
+        editor.config.uploadImgFns.onload = function (resultText, xhr) {
+            var originalName = editor.uploadImgOriginalName || '';  
+            resultText = JSON.parse(resultText).data.url;
+            editor.command(null, 'InsertImage', resultText);
+        };
+        editor.create();
+        </script>
         <br>
         <button id="subm" class="lg">发布博客</button>
     </form>

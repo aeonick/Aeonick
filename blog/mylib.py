@@ -49,13 +49,16 @@ class Article:
         if self.id:
             cur.execute('UPDATE blog SET title = ? ,content = ?,abstract = ?,tag = ? ,file = ? WHERE ID = ?;', (title, content,abstract,tags,file, self.id))
         else:
-            cur.execute('insert into blog (title,tag,file,abstract,content) values (?, ?, ?, ?, ?)', (title,tag,file,abstract,content))
+            cur.execute('insert into blog (title,tag,file,abstract,content) values (?, ?, ?, ?, ?)', (title,tags,file,abstract,content))
             cur.execute('select id from blog order by id desc limit 1')
             blog = cur.fetchall()
             self.id = blog[0][0]
         blogdb.commit()
         cur.execute('delete from tag where blog = ?',(self.id,))
-        tags = tags.split(',')
+        if tags:
+            tags = tags.split(',')
+        else:
+            tags = []
         for tag in tags:
             cur.execute('insert into tag (tag, blog) values (?, ?)', (tag, self.id))
         blogdb.commit()
@@ -157,9 +160,6 @@ class artiList:
         self.al = altemp
         return self.al
 
-
-
-#摘要生成函数，这个实现方式比较蠢，还有一个更快的在aids.py里，但很难看
 def abstr(text,img = ""):
     text = text[:1200]
     text = text.replace(u'&nbsp;',u' ')
@@ -176,6 +176,34 @@ def abstr(text,img = ""):
     text = text.replace(u'<>',u'')
     text = text.replace(u'\n\n\n',u'\n')
     text = text.replace(u'\n\n',u'\n')
-    print text
-    text = text[:120]+'...'+'<center>'+img+'</center>'
+    text = text[:120]+'...'+img
     return text
+
+def exper1():
+    cur=get_db().cursor()
+    cur.execute('''SELECT TAG, COUNT(*) FROM TAG GROUP BY TAG ORDER BY ID DESC;''')
+    print cur.fetchall()
+
+
+def inita():
+    cur=get_db().cursor()
+    cur.execute('''CREATE TABLE blog
+       (ID         SERIAL    PRIMARY KEY,
+       title       TEXT,
+       content     TEXT      NOT NULL,
+       abstract    TEXT      NOT NULL,
+       date        TIMESTAMP DEFAULT (CURRENT_TIMESTAMP(0) + interval '1 hour'), 
+	   tag         TEXT,
+	   file        INT)''')
+    cur.execute('''CREATE TABLE tag
+       (ID         SERIAL    PRIMARY KEY,
+	    tag        TEXT,
+	    blog       INT)''')
+    cur.execute('''CREATE TABLE comm
+       (ID         SERIAL    PRIMARY KEY,
+       author      TEXT,
+       content     TEXT      NOT NULL,
+       blog        INT       NOT NULL,
+       date        TIMESTAMP DEFAULT (CURRENT_TIMESTAMP(0) + interval '8 hour'), 
+       reply       smallint)''')
+    get_db().commit()

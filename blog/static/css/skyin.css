@@ -1,4 +1,4 @@
-@font-face {font-family: 'Lato';font-style: normal;font-weight: 100;src: local('Lato Hairline'), local('Lato-Hairline'), url(/static/css/Lato.woff2) format('woff2');unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;}
+@font-face {font-family: 'Lato';font-style: normal;font-weight: 100;src: local('Lato Hairline'), local('Lato-Hairline'), url('http://ohlk7ls6k.bkt.clouddn.com/Lato.woff2') format('woff2');unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;}
 
 @font-face {
   font-family: 'FontAwesome';
@@ -8,11 +8,11 @@
   font-style: normal;
 }
 
-
-
+.confirmDel{display:none;width:120px;height:80px;background:#fff;position:absolute;border-radius: 10px;border: #ddf7ff;border-style: solid;top:100px;left:160px;text-align:center}
+.cconfirmDel{display:none;width: 40%;height: 160px;background: #fff;position: fixed;border-radius: 10px;border: #ddf7ff;border-style: solid;top: 30%;left: 50%;margin-left: -20%;text-align: center;}
 
 .tx{
-    background-image: url(http://i1.piimg.com/567571/59262810b1794389.jpg);
+    background-image: url(http://ohlk7ls6k.bkt.clouddn.com/59262810b1794389.jpg);
     background-size: 90px 90px;
     height: 90px;
     width: 90px;
@@ -93,7 +93,7 @@ p,pre{margin:0}
 select,input,textarea,button{font-size:16px;border-radius:4px;padding:0 4px;margin:0;background:#FFF;min-height:24px;border-width:1px;border-color:#ccc;border-style:solid}
 label{font-size:16px;font-weight:500;margin:0 10px}
 
-html,body{height:100%;width:100%;margin:0;background:#f9f9f9;color:#545454;font-family:Helvetica,sans-serif,FontAwesome !important;}
+html,body{height:100%;width:100%;margin:0;background:#f9f9f9;color:#545454;font-family:Helvetica,微软雅黑,sans-serif,FontAwesome !important;}
 
 .main{height:100%;margin:0;}
 
@@ -242,14 +242,13 @@ padding-left:30px;
 line-height:1.8;
 }
 
-.well img{width:80%;}
+.well img{max-width:80%;}
 
 center{text-align:center;}
 
 
 arti{line-height:2.2;word-break:break-all;}
 
-arti img{width:80%;margin:0 auto}
 
 h2.cen{text-align:center;}
 
@@ -268,8 +267,10 @@ img.fil{width:80px;position:relative;left:-57px;top:-20px}
 
 #banner{width:100%;height:400px;position:relative;z-index:0;position:absolute;background:url(/static/img/banner.jpg) no-repeat;margin-bottom:-120px;}
 
+#mask{display:none;background:rgba(0, 0, 0, 0.2);position:fixed;width:100%;height:100%;text-align:center;z-index:1300}
+
 @media only screen and (min-width: 1200px){
-    .content{width:80%;margin-left:10%}
+    .content{width:70%;margin-left:15%}
     #muscrl{left:66%;right:10%}
     #banner{background-size:100%}
 }

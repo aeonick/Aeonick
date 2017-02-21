@@ -1,23 +1,34 @@
 {% extends "base.html" %}
 
+{% block bgg %}
+<div id="banner">
+<!--<div style="position:absolute;top:140px;left:12vw;color:#ddd"><pre>
+很久很久以前
+有把斧子
+在做一个很长很长的梦
+......
+</pre></div>-->
+</div>
+{% endblock %}
+
 
 {% block arti %}
-{%- for t in tem %}
+{%- for result in results %}
 <div class="well">
-    <a href="/article/{{ t[0] }}" target="_blank" class="nul"><h2 class="cen">{{ t[1] }}</h2></a>
-    <div class="disp">Posted on : {{ t[4][5:7] }}/{{ t[4][8:10] }}/{{ t[4][:4] }}</div>
+    <a href="/article/{{ result.id }}" target="_blank" class="nul"><h2 class="cen">{{ result.title }}</h2></a>
+    <div class="disp">Posted on : {{ result.date }}</div>
     <div class="finu">
     <img src="/static/img/2.jpg" class="fil" />
-    <div class="fil">{% if t[5]==1 %}闲聊{% elif t[5]==3 %}编程{% elif t[5]==4 %}杂谈{% elif t[5]==5 %}转载{% endif %}</div>
+    <div class="fil">{{ result.file }}</div>
     </div>
-    <pre>{{ t[2]|safe }}</pre>
+    <pre>{{ result.abstract|safe }}</pre>
     <div class="ltag">
     <span>&#61484;</span>
-    {%- for tag in (t[3] or '').split(',') %}
+    {%- for tag in (result.tag or '').split(',') %}
     <a href="/arch/{{ tag }}/1"  class="nul"><span class="tag">{{ tag }}</span></a>
     {%- endfor %}
     </div>
-    <a href="/article/{{ t[0] }}" class="nul"><div class="center"><button class="sm">阅读全文</button></div></a>
+    <a href="/article/{{ result.id }}" class="nul"><div class="center"><button class="sm">阅读全文</button></div></a>
     <br>
     </div>
 {%- endfor %}

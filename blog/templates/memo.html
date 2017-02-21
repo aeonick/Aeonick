@@ -15,7 +15,13 @@
 <br>
 
 
-
+{% if session.get('log') %}
+<div class="cconfirmDel" id="commdel">
+<br><h4>确认删除?</h4><br>
+<button class="sm" id="codel">删除</button>
+<button class="sm" id="coqui">不了</button>
+</div>
+{% endif %}
 
 
 
@@ -28,7 +34,7 @@
 <p class="xxs">{{ ct[2] }}</p>
 <!--<p class="xxs r">{{ ct[1] }}</p>-->
 {% if session.get('log') and ct[1] != "" %}
-<a href="/del/{{ ct[3] }}" style="float:right"><button class="sm">删除</button></a>
+<button class="sm cd" style="float:right" pid="{{ ct[3] }}">删除</button>
 {% endif %}
 <hr>
 <pre>{{ ct[0] }}</pre>

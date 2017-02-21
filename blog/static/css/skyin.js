@@ -13,6 +13,62 @@ function scroll( fn ) {
 
 
 
+$(document).ready(function(){
+    $("#imgc").click(function(){
+        var re=/src="(.*?)"/ig;
+        var data=document.getElementsByClassName('wangEditor-txt')[0].innerHTML;
+        var pos=data.match(re);
+        document.getElementById('imgbox').innerHTML='';
+        console.log(pos);
+        for(var aimg in pos){document.getElementById('imgbox').innerHTML+='<div class="ibox" style="display:inline-block;height:100px;width:160px;margin:10px;overflow:hidden"><img id="d" width="100%" height="100%" '+pos[aimg]+'/></div>';}
+    });
+    $("#imgd").click(function(){
+        document.getElementById('imgbox').innerHTML='';
+        $("#img0").val("");
+    });
+    $("#imgbox").on("click","img",function(){
+        var addi = '<center><img src="'+$(this).attr("src")+'" /></center>';
+        $("#img0").val(addi);
+    });
+    $("arti img").click(function(){
+        $("#mask").fadeIn(200);
+        var imgsrc = $(this).attr("src");
+        document.getElementById("mask").innerHTML='<span style="height:100%;display:inline-block;vertical-align:middle"></span><a target="_blank" href="'+imgsrc+'"><img style="vertical-align:middle;max-width:90%;margin-top:-15px" onmousewheel="return mwimg(this)" title="点击查看原图" src="'+imgsrc+'"></a>';
+    });
+    $("#mask").click(function(){
+        $("#mask").fadeOut(200);
+    });
+    $("#cd").click(function(){
+        pid = $(this).attr("pid");
+        $.post("/del/"+pid,
+        {type:0,pid:pid},
+        function(data,status){
+          window.location.href='/';
+        });
+    });
+    $("#codel").click(function(){
+        pid = $(this).attr("pid");
+        $.post("/del/"+pid,
+        {type:1,pid:pid},
+        function(data,status){
+          location.reload();
+        });
+    });
+    $("#ibd").click(function(){
+        $("#bd").toggle(200);
+    });
+    $("button.sm.cd").click(function(){
+        $("#commdel").toggle(200);
+        $("#codel").attr("pid",$(this).attr("pid"));
+    });
+    $("#qd").click(function(){
+        $("#bd").hide(200);
+    });
+    $("#coqui").click(function(){
+        $("#commdel").hide(200);
+    });
+});
+
 
 $(document).ready(function() {
     $("#nav").click(function(){

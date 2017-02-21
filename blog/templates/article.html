@@ -2,31 +2,45 @@
 
 
 {% block meta %}
+<meta name="description" content="{{ curArti.abstract }}">
 {% endblock %}
 
 
 
 {% block title %}
-<title>{{ cont[0] }}</title>
+<title>{{ curArti.title }}</title>
 {% endblock %}
 
 {% block arti %}
 <script type="text/javascript" src="//cdn.bootcss.com/highlight.js/9.6.0/highlight.min.js"></script>
 <link href="//cdn.bootcss.com/highlight.js/9.6.0/styles/googlecode.min.css" rel="stylesheet">
 
+
+
+
 <div class="well">
-    <h1>{{ cont[0] }}</h1>
+    <h1>{{ curArti.title }}</h1>
     {% if session.get('log') %}
+    <div class="cconfirmDel" id="commdel">
+    <br><h4>确认删除?</h4><br>
+    <button class="sm" id="codel">删除</button>
+    <button class="sm" id="coqui">不了</button>
+    </div>
     <a style="margin-left:10px" href="/edit/{{ id }}"><button class="sm">编辑</button></a>
-    <a style="margin-left:5px" href="/dele/{{ id }}"><button class="sm">删除</button></a>
+    <button class="sm" id="ibd">删除</button>
+    <div id="bd" class="confirmDel">
+    <h4>确认删除?</h4>
+    <button class="sm" id="cd" pid="{{ id }}">删除</button>
+    <button class="sm" id="qd">不了</button>
+    </div>
     {% endif %}
-    <p class="xs" style="float:right">{{ cont[1] }}</p>
+    <p class="xs" style="float:right">{{ curArti.date }}</p>
     <br><br>
-    <arti>{{ cont[2]|safe }}</arti>
+    <arti>{{ curArti.content|safe }}</arti>
     <br>
     <div class="ltag">
     <span>&#61484;</span>
-    {%- for tag in (cont[3] or '').split(',') %}
+    {%- for tag in (curArti.tag or '').split(',') %}
     <a href="/arch/{{ tag }}/1"  class="nul"><span class="tag">{{ tag }}</span></a>
     {%- endfor %}
     </div>
@@ -47,7 +61,7 @@
 </form>
 <br><br>
 
-{%- for ct in tem %}
+{%- for ct in curArti.comList %}
 <div class="comm {{ ct[4] }}">
 <HR color=#ddd SIZE=1>
 <span>{{ ct[2] }}</span>
@@ -55,14 +69,8 @@
 <pre>{{ ct[0] }}</pre>
 <p>{{ ct[1] }}</p>
 {% if session.get('log') and ct[1] != "" %}
-<a href="/del/{{ ct[3] }}"><button class="sm">删除</button></a>
+<button class="sm cd" pid="{{ ct[3] }}">删除</button>
 {% endif %}
-
-
-
-
-
-
 
 </div>
 {%- endfor %}
