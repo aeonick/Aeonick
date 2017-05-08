@@ -21,26 +21,48 @@ class password:
 class Article:
     def __init__(self, id):
         self.id = id
+        self.title = ''
+        self.content = ''
+        self.tag = ''
+        self.file = 1
     def getExit(self):
         blogdb = get_db()
         cur = blogdb.cursor()
         cur.execute('SELECT id, title, abstract, tag, date, file FROM blog where id = ?',(self.id,))
-        self.exit = cur.fetchall()[0]
-        return self.exit
+        exit = cur.fetchall()[0]
+        self.id = exit[0]
+        self.title = exit[1]
+        self.abstract = exit[2]
+        self.tag = exit[3]
+        date = exit[4]
+        if hasattr(date,'strftime'):
+            self.date = date.strftime('%x')
+        else:
+            self.date = date[5:7] + '/' + date[8:10] + '/' + date[:4]
+        file = exit[5]
+        fileDict = {1:'分类1', 3:'分类2', 4:'分类3', 5:'分类4'}
+        self.file = fileDict[file]
     def getArti(self):
         blogdb = get_db()
         cur = blogdb.cursor()
         cur.execute('SELECT title, date, content, tag, abstract from blog where id = ?',(self.id,))
-        self.arti = cur.fetchall()[0]
-        return self.arti
+        arti = cur.fetchall()[0]
+        self.title = arti[0]
+        self.date = arti[1]
+        self.content = arti[2]
+        self.tag = arti[3]
+        self.abstract = arti[4][:-17]
+        com = comment(self.id)
+        self.comList = com.commList()
     def getEdit(self):
         blogdb = get_db()
         cur = blogdb.cursor()
-        cur.execute('SELECT title, content,tag from blog where id = ?',(self.id,))
+        cur.execute('SELECT title, content,tag,file from blog where id = ?',(self.id,))
         content = cur.fetchall()[0]
         self.title = content[0]
         self.content = content[1]
         self.tag = content[2]
+        self.file = content[3]
     def update(self, title, tag, img, file, content):
         abstract = abstr(content,img)
         tags = (tag or '').replace('，',',')
@@ -92,6 +114,7 @@ class comment:
             def coVeri(x):
                 x[4] = x[4] or x[3]
                 diff = x[4]-x[3]
+                diff = diff or ''
                 x[4] = diff and u're'
                 return x
             self.cList = map(coVeri,temp)
@@ -125,13 +148,13 @@ class artiList:
         self.key = key
         self.page = ( page - 1 ) * 8
     def getAl(self):
-        result = []
+        results = []
         for arti in self.al:
             temp = Article(arti)
-            temp = temp.getExit()
-            result.append(temp)
-        self.result = result
-        return self.result
+            temp.getExit()
+            results.append(temp)
+        self.results = results
+        return self.results
     def getLen(self):
         blogdb = get_db()
         cur = blogdb.cursor()
@@ -160,6 +183,7 @@ class artiList:
         self.al = altemp
         return self.al
 
+#摘要生成函数，这个实现方式比较蠢，还有一个更快的在aids.py里，但很难看
 def abstr(text,img = ""):
     text = text[:1200]
     text = text.replace(u'&nbsp;',u' ')
