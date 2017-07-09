@@ -1,4 +1,5 @@
 User-agent: *
+Disallow: skyin.herokuapp.com/
 Disallow: /login/
 Disallow: /logout/
 Disallow: /new/

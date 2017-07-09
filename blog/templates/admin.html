@@ -1,38 +1,92 @@
 {% extends "base.html" %}
-
-{% block title %}
-<title>{{ t }}</title>
-{% endblock %}
-
-{% block content %}
-<div style='margin:45px;margin-top:100px;position:relative'>
-<a href="/new"><button id="subm" class="lg">发布博客</button></a>
+{% block main %}
+<script src="/static/css/skyin-admin.js"></script>
+<div class="memo">
+<push></push>
+<button class="lg" id="c1">博客设置</button>
+<button class="lg" id="c2">分类管理</button>
+<a href="/edit"><button class="lg" id="c3">发布文章</button></a>
+<button class="lg" id="c4">文章管理</button>
+<button class="lg" id="c5">最新回复</button>
+<br><br>
+<div class="well big" id="cc1">
+<h3>基本设置</h3>
+<hr>
+<div class="full">
+<br><label>标题设置</label>
+<input class="config" id="cg0" value={{ info.title }} /><button id="tcg0">确定</button>
+<br><br><label>副标设置</label>
+<input class="config" id="cg1" value={{ info.subtitle }} /><button id="tcg1">确定</button>
 </div>
-<div class="well" style='margin:30px;word-wrap:break-word;position:relative'>
-<h3>最新评论</h3>
 <br>
-{% if session.get('log') %}
-<div class="cconfirmDel" id="commdel">
-<br><h4>确认删除?</h4><br>
-<button class="sm" id="codel">删除</button>
-<button class="sm" id="coqui">不了</button>
+<h3>密码设置</h3>
+<hr>
+<div class="full">
+<br>
+<input type="password" class="config" id="cg3" placeholder="原密码" /><br><br>
+<input type="password" class="config" id="cg4" placeholder="新密码" /><br><br>
+<input type="password" class="config" id="cg5" placeholder="确认密码" />
+<button id="tcg2">确认更改</button>
 </div>
-{% endif %}
+<br>
+<h3>侧边设置</h3>
+<hr>
+<div class="full">
+<br><label>侧边描述</label><button id="tcg3">确认</button><br><br>
+<textarea class="config" id="cg6">{{ info.sidebar }}</textarea>
+<br><br><label>标签设置</label><button id="tcg4">确认</button><br><br>
+<textarea class="config" id="cg7">{{ info.tags }}</textarea>
+<br><br><br><br>
+</div>
+</div>
 
-{%- for ct in tem %}
-<div class="comm">
-<HR color=#ddd SIZE=1>
-<span>{{ ct[2] }}-----{{ ct[1] }}</span>
-<pre>{{ ct[0] }}</pre>
-<span>来源：{{ ct[4] }}</span>
-<span><a href="/article/{{ ct[4] }}" style="margin-left:10px;"><button class="sm">跳转</button></a></span>
-<span><button class="sm cd" pid="{{ ct[3] }}">删除</button></span>
 
+<div class="well big" id="cc2">
+<h3>分类列表</h3>
+<hr>
+<br>
+<div class="full">
+<div>
+<label>分类序号</label><input class="oId" placeholder="0" readonly/>
+<label>分类名称</label><input class="cateContent" placeholder="回收站" readonly/></div><br>
+{%- for (id,cate) in info.cate.items() %}
+<div>
+<label>分类序号</label><input class="oId" value="{{ id }}" />
+<label>分类名称</label><input class="cateContent" value="{{ cate }}" />
+<button class="cate" cid="{{ id }}">修改</button><br><br>
 </div>
 {%- endfor %}
-
+<div>
+<label>分类序号</label><input class="oId" placeholder="序号" />
+<label>分类名称</label><input class="cateContent" placeholder="新增的分类名称" />
+<button class="cate" cid="0">新增</button></div><br><br>
+</div>
+<br><br>
 </div>
 
 
+<div class="well big" style="display:block" id="cc0">
+<h3>最新回复</h3>
+{%- for comment in cl %}
+<div class="comment">
+<hr>
+<div class="full">
+<tab>{{ comment[2] }}</tab>
+<pre>{{ comment[0] }}</pre>
+<a href="/article/{{ comment[4] }}"><button>跳转</button></a>
+<div class="del">
+<button class="del">删除</button>
+<div class="confirmDel">
+    <p>确认删除?</p>
+    <button class="confirm" cid="{{ comment[3] }}">删除</button>
+    <button class="quit">不了</button>
+</div>
+</div>
+<p class="time">{{ comment[1] }}</p>
+</div>
+</div>
+{%- endfor %}
+</div>
+</div>
 
 {% endblock %}

@@ -1,57 +1,46 @@
 {% extends "base.html" %}
 
-{% block banner %}
-{% endblock %}
 
-
-{% block content %}
-<link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/wangeditor/2.1.10/css/wangEditor.min.css">
-<script type="text/javascript" src="//cdn.bootcss.com/wangeditor/2.1.10/js/wangEditor.min.js"></script>
-
-
-
-
-<div class="content">
-    <br><br><br><br>
-    <form method="POST" name="form" onSubmit="return confirm();">
+{% block main %}
+<link href="http://cdn.bootcss.com/wangeditor/2.1.10/css/wangEditor.min.css" rel="stylesheet">
+<script src="http://cdn.bootcss.com/wangeditor/2.1.10/js/wangEditor.min.js"></script>
+<div class="memo">
+<push></push>
+    <form method="POST" id="article" onSubmit="return confirm0();">
         <label>分类</label>
         <select name="file" style="width:80px">
-        <option value =1 {% if curArti.file==1 %}selected="selected"{% endif %}>分类1</option>
-        <option value =3 {% if curArti.file==3 %}selected="selected"{% endif %}>分类2</option>
-        <option value =4 {% if curArti.file==4 %}selected="selected"{% endif %}>分类3</option>
-        <option value =5 {% if curArti.file==5 %}selected="selected"{% endif %}>分类4</option>
+        {%- for (id,cate) in info.cate.items() %}
+        <option value = "{{ id }}" {% if curArti.file==id %}selected="selected"{% endif %}>{{ cate }}</option>
+        {%- endfor %}
         </select>
         <label>标签</label>
-        <input type="text" name="tags" style="width:60%" value="{{ curArti.tag }}">
+        <input name="tags" style="width:50%" value="{{ curArti.tag }}">
         <br><br>
         <label>标题</label>
-        <input type="text" name="title" style="width:80%" value="{{ curArti.title }}">
+        <input name="title" id="title" style="width:75%" value="{{ curArti.title }}">
         <br><br>
-        <label>摘要图</label>
-        <input type="text" id="img0" name="img" style="width:80%;"><br>
+        <label>封图</label>
+        <input id="img0" name="img" style="width:75%;" value="{{ curArti.img }}"><br><br>
         <label>快速设置</label>
         <input type="radio" name="abi" id="imgc"/> 选择
         <input type="radio" checked="checked" name="abi" id="imgd" /> 取消
         <div id="imgbox" style=""></div>
         <br><br>
-        <textarea id="editor" name="editor" style="height:600px" type="text">{{ curArti.content }}</textarea>
-        <script type="text/javascript">
-        var editor = new wangEditor('editor');
-        editor.config.uploadImgUrl = 'http://upload.qiniu.com/';
-        editor.config.uploadImgFileName = 'file';
-        editor.config.uploadParams = {
-        token: '{{ token }}',
-        };
-        editor.config.uploadImgFns.onload = function (resultText, xhr) {
-            var originalName = editor.uploadImgOriginalName || '';  
-            resultText = 'http://yourname/'+JSON.parse(resultText).key; //这里yourname写自己的七牛外链默认域名
-            editor.command(null, 'InsertImage', resultText);
-        };
-        editor.create();
-        </script>
+        <textarea id="editor" name="editor" style="height:38em" type="text">{{ curArti.content }}</textarea>
+<script type="text/javascript">
+    var editor = new wangEditor('editor');
+    editor.config.uploadImgUrl = 'https://sm.ms/api/upload';
+    editor.config.uploadImgFileName = 'smfile';
+    editor.config.uploadImgFns.onload = function (resultText, xhr) {
+    var originalName = editor.uploadImgOriginalName || '';  
+    resultText = JSON.parse(resultText).data.url;
+    editor.command(null, 'InsertImage', resultText);
+    };
+    editor.create();
+</script>
         <br>
-        <button id="subm" class="lg">发布博客</button>
+        <input name="id" hidden value="{{ curArti.id }}"/>
+        <button class="lg">发布博客</button>
     </form>
-    <br>
 </div>
 {% endblock %}
