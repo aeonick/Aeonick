@@ -1,9 +1,6 @@
 {% extends "base.html" %}
-
-
 {% block main %}
-<link href="http://cdn.bootcss.com/wangeditor/2.1.10/css/wangEditor.min.css" rel="stylesheet">
-<script src="http://cdn.bootcss.com/wangeditor/2.1.10/js/wangEditor.min.js"></script>
+<script src="https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.min.js"></script>
 <div class="memo">
 <push></push>
     <form method="POST" id="article" onSubmit="return confirm0();">
@@ -27,7 +24,12 @@
         <div id="imgbox" style=""></div>
         <br><br>
         <textarea id="editor" name="editor" style="height:38em" type="text">{{ curArti.content }}</textarea>
-<script type="text/javascript">
+        <script type="text/javascript">
+            var E = window.wangEditor
+            var editor = new E('#editor')
+            editor.create()
+        </script>
+<!--<script type="text/javascript">
     var editor = new wangEditor('editor');
     editor.config.uploadImgUrl = 'https://sm.ms/api/upload';
     editor.config.uploadImgFileName = 'smfile';
@@ -37,7 +39,7 @@
     editor.command(null, 'InsertImage', resultText);
     };
     editor.create();
-</script>
+</script>-->
         <br>
         <input name="id" hidden value="{{ curArti.id }}"/>
         <button class="lg">发布博客</button>

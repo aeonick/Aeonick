@@ -133,12 +133,7 @@ class Comment:
                 c[4]=c[3]
             return c
         temp = map(preRep,list(temp))
-        def coSort(x,y):
-            if x[4]<y[4]:
-                return 1
-            else:
-                return -1
-        temp.sort(coSort)
+        temp.sort(key=lambda s: s[4])
         self.cl = temp
     def getNew(self):
         blogdb = get_db()

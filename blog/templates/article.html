@@ -36,11 +36,12 @@
 </div>
 <br><br>
 <div class="well big">
-<form method="POST" id="comment" onSubmit="return confirm1();">
-    <textarea style="width:100%;margin-bottom:10px" name="content" rid="0" bid="{{ curArti.id }}" id="content" rows="3" placeholder="一句话吐槽"></textarea>
+<form method="POST" id="comment" onSubmit="return confirm5();">
+    <textarea style="width:100%;margin-bottom:10px" name="content" bid="{{ curArti.id }}" id="content" rows="3" placeholder="一句话吐槽"></textarea>
     <br>
     <div style="text-align:right">
     <input type="text" name="author" id="author" placeholder="输入您的昵称或直接留空"/>
+    <input name="rid" id="rid" hidden/>
     <button>发布评论!</button>
     </div>
 </form>
