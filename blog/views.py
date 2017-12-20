@@ -3,8 +3,12 @@
 from blog import app
 from flask import Flask, render_template, session, redirect, url_for, request, g, flash, send_from_directory,abort
 from mylib import Comment,Article,ArtiList,blogInfo
+from random import randint as randint
 
-
+def getName():
+    preName=['路过的','隐匿的','黯淡的','蒙面的','薄情的','无名的']
+    secName=['茶杯','毛线','喵喵','柚子','拐杖','硬币','木剑']
+    return preName[randint(0,5)]+secName[randint(0,6)]
 
 #异常处理
 @app.errorhandler(404)
@@ -83,8 +87,22 @@ def admin():
     if not session.get('log'):
         return redirect(url_for('login'))
     return render_template('admin.html',info=blogInfo(),cl=Comment().getNew())
-@app.route('/article/<int:bg_id>')
+@app.route('/article/<int:bg_id>', methods=['Get','POST'])
 def article(bg_id):
+    if request.method == 'POST':
+        try:
+            author = request.form.get('author')
+            if not author:
+                author = session.get('name')
+            if not author:
+                author = getName()
+            session['name'] = author
+            content = request.form.get('content')
+            rid = request.form.get('rid',type=int)
+            Comment(bg_id).insert(content,author,rid)
+            return redirect(url_for('article',bg_id = bg_id))
+        except:
+            abort(500)
     if bg_id==0:
         return redirect(url_for('memo'))
     try:

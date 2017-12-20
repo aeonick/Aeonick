@@ -42,18 +42,20 @@ pagn.prev:after{content:'\f100'}
 pagn.next:after{content:'\f101'}
 .catetag{top: 6em;background: url(/static/img/2.jpg) no-repeat;width: 5.8em;height: 2.7em;background-size: 100%;left: -1.2em;color: #fff;position: absolute;text-indent: 0.8em;font-size: 0.95em;line-height: 1.6em;}
 .full{margin-left:3%;width:94%;}
-.main{display:inline-block;width:50%;margin-left:15%;vertical-align:top;}
-.sidebar{display:inline-block;width:20%;vertical-align:top}
+.main{display:inline-block;width:70%;vertical-align:top;}
+.sidebar{display:inline-block;width:30%;vertical-align:top}
+.container{display:block;margin:0 auto;width:80%;}
 .memo{width:70%;margin-left:15%}
 .well{border:1px solid #ddd;border-radius:0.375em;background:#fff;}
-.well.big{padding:1.5em 2.25em}
+.well.big,.well.wish{padding:1.5em 2.25em}
+
 .well.small{padding:0.75em 1.2em;padding-bottom:1em;}
 tab{font-weight:bold;font-size:0.95em;}
 span.tags{margin-left: 0.32em;font-size:0.87em}
 span.tagm{margin-left: 0.32em;font-size:1.13em}
 span.tagl{margin-left: 0.32em;font-size:1.5em}
 hr{border:none;border-bottom:1px solid #ddd;padding:0}
-tx{background-image: url(http://ohlk7ls6k.bkt.clouddn.com/59262810b1794389.jpg); background-size:100%;height: 5.6em;width: 5.6em;display:block;margin:0 auto;border: 1px solid #ddd;border-radius: 0.8em;}
+tx{background-image: url(/static/img/logo.jpg); background-size:100%;height: 5.6em;width: 5.6em;display:block;margin:0 auto;border: 1px solid #ddd;border-radius: 0.8em;}
 #cvs{position:fixed;overflow:hidden;top:0;bottom:0;left:0;right:0;width:100vw;height:100vh}
 #musc{left:50%;margin-left:-1em;transition:all 1s ease;z-index:10;position:absolute;height:2em;width:2em;border-radius:2em;background:#fff;text-align:center;line-height:1.8em;border:1px solid #B2DFEE;font-size:2.5em;}
 #mctrl{color:#999;height:8em;user-select:none;cursor:default;z-index:5}
@@ -90,31 +92,40 @@ input.oId{width:3em}
 .memo .well.big{display:none}
 .memo .well.big textarea{width:40em;max-width:95%;height:25em;}
 label{margin-right:0.75em;}
-@media only screen and (min-width: 1300px){
+
+@media only screen and (min-width: 1921px){
+    body{font-size:24px;}
+    .container{width:1536px;}
+    .memo{width:1344px;margin:0 auto}
+}
+@media only screen and (min-width: 1300px) and (max-width: 1920px){
     body{font-size:1.25vw;}
 }
 @media only screen and (min-width: 900px) and (max-width: 1100px){
-    .main{width:64%;margin-left:4%;}
-    .sidebar{width:28%;}
+    .container{width:92%;}
     .memo{width:92%;margin-left:4%}
 }
 @media only screen and (min-width: 800px) and (max-width: 900px){
-    .main{width:64%;margin-left:2%;}
-    .sidebar{width:32%;}
+    .main{width:66%;}
+    .sidebar{width:34%;}
+    .container{width:96%;}
     .memo{width:96%;margin-left:2%}
 }
 @media only screen and (min-width: 650px) and (max-width: 800px){
     .main,.memo{width:80%;margin-left:10%;}
+    .container{width:100%;}
     .sidebar{display:none}
     .waterfall{-moz-column-count:3;-webkit-column-count:3;column-count:3;}
 }
 @media only screen and (min-width: 450px) and (max-width: 650px){
     .main,.memo{width:92%;margin-left:3%;}
+    .container{width:100%;}
     .sidebar{display:none}
     .waterfall{-moz-column-count:2;-webkit-column-count:2;column-count:2;}
 }
 @media only screen and (max-width: 450px){
     .main,.memo{width:96%;margin-left:2%;}
+    .container{width:100%;}
     .well.big{padding:1.5em 0.8em}
     .catetag{display:none}
     .sidebar{display:none}
