@@ -170,7 +170,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $("#imgc").click(function(){
         var re=/src="(.*?)"/ig;
-        var data=document.getElementsByClassName('wangEditor-txt')[0].innerHTML;
+        var data=$('#editor').val();
         var pos=data.match(re);
         document.getElementById('imgbox').innerHTML='';
         for(var aimg in pos){document.getElementById('imgbox').innerHTML+='<div class="ibox"><img '+pos[aimg]+'/></div>';}

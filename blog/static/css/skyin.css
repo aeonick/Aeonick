@@ -33,8 +33,8 @@ button:hover{background:#f0f0f0}
 button.lg{font-size:1.1em;color:#666}
 select,input,textarea{line-height:1.6em;border-radius:0.25em;border:1px solid #ddd;padding:0 0.4em;font-size:0.875em;color:#666;background:#FFF;}
 select,input{height:1.6em;}
-.ibox{display:inline-block;height:7em;width:10em;margin:0.7em;vertical-align:top;}
-.ibox img{width:100%}
+.ibox{display:inline-block;width:10em;margin:1em;vertical-align:top;}
+.ibox img{max-width:10em;max-height:10em;}
 pagn{display:inline-block;height:1.5em;width:1.5em;margin:0.1em;border-radius:0.75em;border:1px solid #c1d8e6;color:#888;background:#fff;vertical-align:top;text-align:center;line-height:1.5em;font-size:1.1em;}
 pagn:hover{background:#a7d7ff;color:#fff}
 pagn.active{background:#a7d7ff;color:#fff}
@@ -92,6 +92,9 @@ input.oId{width:3em}
 .memo .well.big{display:none}
 .memo .well.big textarea{width:40em;max-width:95%;height:25em;}
 label{margin-right:0.75em;}
+.w-e-text-container{background:#fff}
+.w-e-menu {display:inline-block;border:0.5px solid #ddd}
+.w-e-toolbar {display: block !important;}
 
 @media only screen and (min-width: 1921px){
     body{font-size:24px;}
