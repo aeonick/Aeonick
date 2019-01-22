@@ -1,43 +1,53 @@
 {% extends "base.html" %}
 {% block main %}
-<script src="https://cdn.bootcss.com/wangEditor/3.0.15/wangEditor.min.js"></script>
-<div class="memo">
-<push></push>
-    <form method="POST" id="article" onSubmit="return confirm0();">
-        <label>分类</label>
-        <select name="file" style="width:80px">
-        {%- for (id,cate) in info.cate.items() %}
-        <option value = "{{ id }}" {% if curArti.file==id %}selected="selected"{% endif %}>{{ cate }}</option>
-        {%- endfor %}
-        </select>
-        <label>标签</label>
-        <input name="tags" style="width:50%" value="{{ curArti.tag }}">
-        <br><br>
-        <label>标题</label>
-        <input name="title" id="title" style="width:75%" value="{{ curArti.title }}">
-        <br><br>
-        <label>封图</label>
-        <input id="img0" name="img" style="width:75%;" value="{{ curArti.img }}"><br><br>
-        <label>快速设置</label>
-        <input type="radio" name="abi" id="imgc"/> 选择
-        <input type="radio" checked="checked" name="abi" id="imgd" /> 取消
-        <div id="imgbox" style=""></div>
-        <br><br>
-        <textarea id="editor" name="editor" hidden></textarea>
-        <div id="wang">{{ curArti.content|safe }}</div>
-        <script>
-            var E = window.wangEditor
-            var editor = new E('#wang')
-            editor.customConfig.onchange = function (html) {$('#editor').val(html)}
-            //editor.customConfig.uploadImgServer = "https://sm.ms/api/upload"
-            //editor.customConfig.uploadFileName = 'smfile'
-            //editor.customConfig.debug = true
-            editor.create()
-            $('#editor').val(editor.txt.html())
-        </script>
-        <br>
-        <input name="id" hidden value="{{ curArti.id }}"/>
-        <button class="lg">发布博客</button>
-    </form>
+<div id="edit">
+    <div style="display:flex;flex-wrap:wrap;align-items: center">
+    <label>分类</label>
+    <select ref="file" id="file" file="{{ data.file }}">
+        <option v-for="(value, key) in cates" :value="key" >${value}</option>
+        <option value="0" >回收站</option>
+    </select>
+    <br>
+    <label>标题</label><input ref="title" value="{{ data.artititle }}" />
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items: center">
+    <label>标签</label><input ref="tag" value="{{ data.tag }}" />
+    <br>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items: center">
+    <label>摘要图</label><input ref="img" value="{{ data.img }}" />
+    <br>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items: center">
+    <label>摘要</label><button v-on:click="createAbs">自动生成</button>
+    <br>
+    <textarea rows="6" ref="abstract">{{ data.abstract }}</textarea>
+    </div>
+    <br>
+    <label>正文</label>
+    <br>
+    <div id="editor">
+        {{ data.content|safe }}
+    </div>
+    <br>
+    <button class="big" v-on:click="post">发布文章!</button>
+    <br><br><br>
 </div>
+<script src="/static/css/edit.js"></script>
+<script src="//unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
+<script>
+    var E = window.wangEditor
+    var editor = new E('#editor')
+    editor.create()
+</script>
+<style>
+label{margin-right: 0.6em;line-height: 3em;}
+select,input,textarea{line-height:1.32rem;margin-right: 1em;}
+select{width:6rem;}
+input{flex:1}
+input{width:20em;}
+.w-e-toolbar {flex-wrap: wrap;}
+#editor{background: #fff;}
+button.big {height: 2.5rem;line-height: 2.5rem;padding: 0 0.7em;font-size: 1rem;}
+</style>
 {% endblock %}

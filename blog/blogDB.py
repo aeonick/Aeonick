@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
-
-from blog import app
-from flask import Flask, g
+from flask import g
 import sqlite3
+from blog import app
 
-
-#链接和关闭数据库的两个函数
 def connect_db():
     rv = sqlite3.connect(app.config['DATABASE'])
     return rv

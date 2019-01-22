@@ -2,54 +2,54 @@
 <head>
 <meta charset="utf-8" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
 <link href="/static/css/skyin.css" rel="stylesheet">
-<script src="/static/css/skyin.js"></script>
-<script src="/static/css/skyin-mctrl.js"></script>
+<link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png">
+<link rel="shortcut icon" type="image/png" href="/static/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png">
+<link rel="manifest" href="/static/icons/site.webmanifest">
+<link rel="mask-icon" href="/static/icons/safari-pinned-tab.svg" color="#3650b9">
+<link rel="shortcut icon" href="/static/icons/favicon.ico">
+<meta name="msapplication-TileColor" content="#666666">
+<meta name="msapplication-config" content="/static/icons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
 <meta http-equiv="Content-Language" content="zh-cn">
-{% block meta %}
-<meta name="description" content="从前
-有把斧子
-在做一个很长很长的梦
-......">
-{% endblock %}
 <meta name="AUTHOR" content="烂柯">
-<title>{{ info.title }} - {{ info.subtitle }}</title>
+{% block meta %}
+<meta name="description" content="有一把斧子<br>在做一个很长很长的梦<br>......">
+<title>烂柯居 - DO WHAT THOU WILT</title>
+{% endblock %}
 </head>
 <body>
-<canvas id="cvs"></canvas>
-<nav id="nav">
-<div id="circle"><span>Skyin.Win</span></div>
-<div id="nbtns">
-<a href='/'><navbtn>&#61461; 首页</navbtn></a>{%- for (id,cate) in info.cate.items() %}<a href='/arch{{ id }}/1'><navbtn>{{ cate }}</navbtn></a>{%- endfor %}<a href='/memo'><navbtn>&#61508; 留言板</navbtn></a><a href='/wish'><navbtn>&#61549; 许愿池</navbtn></a>
+<main>
+<canvas id="cvs" v-on:click="draw"></canvas>
+<div id="nav">
+    <div id="circle">Skyin.Win</div>
+    <div id="navcate" v-on:click="toggle">&#61641;</div>
+    <div id="nav-btns">
+        <div class="navbtn"><a href='/'><navbtn>&#61461; 首页</navbtn></a></div>
+        <div class="navbtn" v-for="(value, key) in cates">
+            <a :href="'/arch'+key+'/1'"><navbtn>${value}</navbtn></a>
+        </div>
+        <div class="navbtn"><a href='/memo'><navbtn>&#61508; 留言板</navbtn></a></div>
+    </div>
 </div>
-<div id="navcate">&#61641;</div>
-</nav>
-<div id="mask"></div>
-{% block main %}
-<push></push>
-<div class="container">
 <div class="main">
-<div class="full">
+{% block main %}
+<div class="content" id="contents">
 {% block content %}{% endblock %}
-</div>
-</div><div class="sidebar">
-<div class="full">
-{{ info.sidebar|safe }}
-<div class="well small">
-<tab>标签</tab>
-<hr>
-{{ info.tags|safe }}
-</div>
-</div>
-</div>
+</div><div id="sidebar" v-html='sidebarData'>
 </div>
 {% endblock %}
-<br><br><br>
-<footer id="footer">
-<p>Powered by 烂柯</p>
-<p><a href="/article/4" target="_blank">﻿博客源码</a>||<a href="http://www.feedsoso.com/feed/yzlmru">订阅本博客</a></p>
-<p id="time"></p>
-<p>本站所有原创内容遵循<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/legalcode" target="_blank">知识共享署名3.0</a>，欢迎转载</p>
-</footer>
+</div>
+<push></push></main>
+<div id="footer">
+    <p>Powered by 烂柯</p>
+    <p><a href="/article/4" target="_blank">﻿博客源码</a>||<a href="http://www.feedsoso.com/feed/yzlmru">订阅本博客</a></p>
+    <p id="time">本博客已不稳定运行 ${time}</p>
+    <p>本站所有原创内容遵循<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/legalcode" target="_blank">知识共享署名3.0</a>，欢迎转载</p>
+</div>
+<script src="/static/css/skyin.js"></script>
 </body>

@@ -1,39 +1,14 @@
 {% extends "base.html" %}
-
 {% block main %}
-<br><br><br><br>
-<div class="memo">
-<div class="well big" style="display:block">
-<form method="POST" id="memo" onSubmit="return confirm2();">
-    <textarea style="width:98%;height:auto" name="content"  id="content" rows="3" placeholder="一句话吐槽"></textarea>
-    <br><br>
+<div id="memopost">
+<div class="well">
+    <input v-model="author" v-bind:placeholder="inputholder"/>
+    <textarea rows="3" v-model="text" v-bind:placeholder="textholder"></textarea>
+    <br>
     <div style="text-align:right">
-    <input type="text" name="author" id="author" placeholder="输入您的昵称或直接留空"/>
-    <button>发布评论!</button>
+    <button v-on:click="post">发布评论!</button>
     </div>
-</form>
 </div>
-<br><br>
-<div class="waterfall">
-{%- for comment in cl %}
-<div class="item">
-<tab>{{ comment[2] }}{% if session.get('log') %}
-<div class="del">
-<button class="del">删除</button>
-<div class="confirmDel">
-    <p>确认删除?</p>
-    <button class="confirm" cid="{{ comment[3] }}">删除</button>
-    <button class="quit">不了</button>
-</div>
-</div>
-{% endif %}</tab>
-<hr>
-<div class="full">
-<pre>{{ comment[0] }}</pre>
-</div>
-</div>
-{%- endfor %}
-
-</div>
+<memo v-for="info in infos" v-bind:info="info"></memo>
 </div>
 {% endblock %}
