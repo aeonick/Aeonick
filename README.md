@@ -3,7 +3,7 @@
     python版本迁移到python3  
     评论功能进行独立  
     博客后台模块还未完成，管理密码：1  
-    发布文章：localhost/edit  
+    发布文章：localhost/edit（需先进入/login输入密码登录）  
 
 
 这是一个轻量级的基于Flask的博客。
